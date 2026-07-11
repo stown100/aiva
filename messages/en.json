@@ -1,0 +1,164 @@
+{
+  "common": {
+    "appName": "AIVA",
+    "tagline": "Create your new style",
+    "tryForFree": "Try for free",
+    "create": "Create",
+    "history": "History",
+    "account": "Account",
+    "backHome": "Back home"
+  },
+  "landing": {
+    "hero": {
+      "badge": "AI photo magic",
+      "title": "One photo. A whole new you.",
+      "subtitle": "Upload a photo, pick a style and let AI do the magic. No settings, no skills — just wow.",
+      "cta": "Try for free",
+      "secondaryCta": "See the styles",
+      "beforeLabel": "Before",
+      "afterLabel": "After",
+      "freeNote": "3 free creations every month"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "subtitle": "Three taps between you and your new look",
+      "steps": {
+        "upload": {
+          "title": "Upload a photo",
+          "description": "Any selfie or portrait works great"
+        },
+        "style": {
+          "title": "Pick a style",
+          "description": "15 hand-crafted looks to choose from"
+        },
+        "result": {
+          "title": "Get your result",
+          "description": "Ready in seconds — download and share"
+        }
+      }
+    },
+    "showcase": {
+      "title": "Pick your vibe",
+      "subtitle": "From anime hero to magazine cover — one tap away",
+      "cta": "Try them all"
+    },
+    "benefits": {
+      "title": "Why AIVA",
+      "items": {
+        "simple": {
+          "title": "No prompts, no settings",
+          "description": "Just choose a style — we handle all the magic behind the scenes."
+        },
+        "private": {
+          "title": "Private by default",
+          "description": "Your photos are stored securely and are visible only to you."
+        },
+        "quality": {
+          "title": "Stunning quality",
+          "description": "Sharp, share-ready results that look great everywhere."
+        }
+      }
+    },
+    "pricing": {
+      "title": "Simple pricing",
+      "subtitle": "Start free. Upgrade when you fall in love.",
+      "free": {
+        "name": "Free",
+        "price": "$0",
+        "period": "forever",
+        "features": {
+          "credits": "3 creations every month",
+          "styles": "All 15 styles",
+          "quality": "HD downloads"
+        },
+        "cta": "Try for free"
+      },
+      "pro": {
+        "name": "Pro",
+        "badge": "Coming soon",
+        "features": {
+          "unlimited": "Way more creations",
+          "newStyles": "New styles first",
+          "speed": "Priority speed"
+        }
+      }
+    },
+    "footer": {
+      "rights": "© {year} AIVA. All rights reserved."
+    }
+  },
+  "createPlaceholder": {
+    "title": "The studio is almost ready",
+    "description": "Photo upload and style selection are coming in the next step of the build."
+  },
+  "styles": {
+    "categories": {
+      "trending": "Trending",
+      "creative": "Creative",
+      "professional": "Professional",
+      "fun": "Fun"
+    },
+    "items": {
+      "anime-dream": {
+        "name": "Anime Dream",
+        "description": "Become an anime hero"
+      },
+      "pixar-character": {
+        "name": "Pixar Character",
+        "description": "Your own animated movie moment"
+      },
+      "cinematic-movie": {
+        "name": "Cinematic Movie",
+        "description": "A still from your blockbuster"
+      },
+      "luxury-magazine": {
+        "name": "Luxury Magazine",
+        "description": "Cover-star glamour"
+      },
+      "vintage-film": {
+        "name": "Vintage Film",
+        "description": "Timeless analog mood"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "description": "Neon future you"
+      },
+      "fantasy-hero": {
+        "name": "Fantasy Hero",
+        "description": "A legend from another realm"
+      },
+      "comic-book": {
+        "name": "Comic Book",
+        "description": "Pow! Straight out of a comic"
+      },
+      "watercolor": {
+        "name": "Watercolor",
+        "description": "Soft hand-painted portrait"
+      },
+      "oil-painting": {
+        "name": "Oil Painting",
+        "description": "Classic gallery masterpiece"
+      },
+      "linkedin-portrait": {
+        "name": "LinkedIn Portrait",
+        "description": "Polished professional headshot"
+      },
+      "startup-founder": {
+        "name": "Startup Founder",
+        "description": "Confident visionary look"
+      },
+      "influencer-style": {
+        "name": "Influencer Style",
+        "description": "Scroll-stopping social glow"
+      },
+      "retro-90s": {
+        "name": "Retro 90s",
+        "description": "Back to the neon decade"
+      },
+      "game-character": {
+        "name": "Game Character",
+        "description": "Your playable hero"
+      }
+    }
+  }
+}
