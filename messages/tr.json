@@ -103,6 +103,11 @@
       "rights": "© {year} AIVA. Tüm hakları saklıdır."
     }
   },
+  "notFound": {
+    "title": "Sayfa bulunamadı",
+    "description": "Bu sayfa başka bir şeye dönüşmüş gibi görünüyor. Seni geri götürelim.",
+    "cta": "Ana sayfaya dön"
+  },
   "authGate": {
     "title": "Devam etmek için giriş yap",
     "description": "Saniyeler sürer — sihirli bağlantı veya Google, şifre yok.",

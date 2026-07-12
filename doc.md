@@ -273,7 +273,9 @@ POST /api/generations/[id]/variants    -- regenerate: то же, version+1
 | 9 | ✅ **История + аккаунт** | `/history`, `/account` |
 | 10 | ✅ **Локализация** | next-intl, 4 словаря, переключатель языка |
 | 11 | ✅ **PWA** | manifest, SW, иконки, установка |
-| 12 | **Аналитика + полировка** | события, edge cases, empty states, финальный проход по UX |
+| 12 | ✅ **Аналитика + полировка** | события, edge cases, empty states, финальный проход по UX |
+
+**MVP полностью реализован** (все 12 шагов). Дальнейшие направления: платежи (Stripe + `credit_transactions.reason='purchase'`), реальные превью стилей в `styles.preview_url`, прямая загрузка в Storage для Vercel, Upstash Redis для rate limiting, A/B промптов через `prompt_version`.
 
 Перед каждым шагом — краткое описание: что реализуется, какие файлы, почему такой подход. После — пауза на вашу проверку.
 

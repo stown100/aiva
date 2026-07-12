@@ -1,6 +1,9 @@
+"use client";
+
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { track } from "@/shared/analytics";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
@@ -49,7 +52,10 @@ export function PricingTeaserSection() {
             </CardContent>
           </Card>
 
-          <Card className="border-dashed">
+          <Card
+            className="cursor-pointer border-dashed transition-colors hover:border-primary/40"
+            onClick={() => track({ name: "subscription_clicked" })}
+          >
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-xl">
                 {t("pro.name")}

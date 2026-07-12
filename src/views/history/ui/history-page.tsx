@@ -58,7 +58,13 @@ export function HistoryPage() {
               <h1 className="text-center text-2xl font-bold tracking-tight md:text-3xl">
                 {t("history.title")}
               </h1>
-              <div className="mt-8">
+              <div
+                className={
+                  isDetailLoading
+                    ? "pointer-events-none mt-8 animate-pulse opacity-60"
+                    : "mt-8"
+                }
+              >
                 <HistoryGrid onOpen={(id) => void handleOpen(id)} />
               </div>
             </section>

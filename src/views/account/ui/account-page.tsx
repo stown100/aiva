@@ -7,6 +7,7 @@ import { SignOutButton } from "@/features/sign-out";
 import { LanguageSwitcher } from "@/features/switch-language";
 import { FREE_MONTHLY_CREDITS } from "@/shared/config";
 import { Badge } from "@/shared/ui/badge";
+import { Button } from "@/shared/ui/button";
 import { Card, CardContent } from "@/shared/ui/card";
 import { AppHeader } from "@/widgets/app-header";
 import { AuthGate } from "@/widgets/auth-gate";
@@ -14,7 +15,7 @@ import { AuthGate } from "@/widgets/auth-gate";
 export function AccountPage() {
   const t = useTranslations();
   const format = useFormatter();
-  const { profile, status, markGuest } = useMe();
+  const { profile, status, markGuest, refetch } = useMe();
 
   return (
     <>
@@ -25,6 +26,15 @@ export function AccountPage() {
         )}
 
         {status === "guest" && <AuthGate />}
+
+        {status === "error" && (
+          <div className="flex flex-col items-center gap-4 rounded-3xl border border-dashed py-12 text-center">
+            <p className="text-sm text-muted-foreground">{t("errors.internal")}</p>
+            <Button variant="outline" onClick={() => void refetch()}>
+              {t("common.retry")}
+            </Button>
+          </div>
+        )}
 
         {profile && (
           <section>

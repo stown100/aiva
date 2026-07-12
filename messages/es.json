@@ -103,6 +103,11 @@
       "rights": "© {year} AIVA. Todos los derechos reservados."
     }
   },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "Parece que esta página se transformó en otra cosa. Te llevamos de vuelta.",
+    "cta": "Volver al inicio"
+  },
   "authGate": {
     "title": "Inicia sesión para continuar",
     "description": "Toma segundos — enlace mágico o Google, sin contraseñas.",

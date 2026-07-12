@@ -103,6 +103,11 @@
       "rights": "© {year} AIVA. All rights reserved."
     }
   },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This page seems to have transformed into something else. Let's get you back.",
+    "cta": "Back home"
+  },
   "authGate": {
     "title": "Sign in to continue",
     "description": "It takes seconds — a magic link or Google, no passwords.",

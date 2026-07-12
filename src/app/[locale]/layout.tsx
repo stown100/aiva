@@ -4,6 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Geist_Mono, Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 
+import { PageViewTracker } from "@/shared/analytics";
 import { routing } from "@/shared/i18n/routing";
 import { ServiceWorkerRegistrar } from "@/shared/pwa";
 
@@ -60,6 +61,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     <html lang={locale} className={`${interSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <PageViewTracker />
         <ServiceWorkerRegistrar />
       </body>
     </html>
