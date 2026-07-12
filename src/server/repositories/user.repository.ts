@@ -23,6 +23,11 @@ export async function findUserById(userId: string): Promise<UserRecord | null> {
   return data;
 }
 
+export async function updateUserLanguage(userId: string, language: string): Promise<void> {
+  const { error } = await getSupabaseAdmin().from("users").update({ language }).eq("id", userId);
+  if (error) throw new Error(`users update failed: ${error.message}`);
+}
+
 /** Lazy monthly free-credit reset; no-op unless the reset date has passed. */
 export async function ensureMonthlyCredits(userId: string): Promise<void> {
   const { error } = await getSupabaseAdmin().rpc("ensure_monthly_credits", {

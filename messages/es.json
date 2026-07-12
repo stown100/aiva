@@ -1,1 +1,259 @@
-{}
+{
+  "common": {
+    "appName": "AIVA",
+    "tagline": "Crea tu nuevo estilo",
+    "tryForFree": "Prueba gratis",
+    "create": "Crear",
+    "history": "Historial",
+    "account": "Cuenta",
+    "signOut": "Cerrar sesión",
+    "retry": "Reintentar",
+    "creditsLeft": "{count, plural, =1 {Queda # creación} other {Quedan # creaciones}}"
+  },
+  "auth": {
+    "title": "Bienvenido a AIVA",
+    "subtitle": "Inicia sesión para crear tu nuevo estilo",
+    "google": "Continuar con Google",
+    "or": "o",
+    "emailLabel": "Email",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "sendLink": "Enviar enlace de acceso",
+    "sending": "Enviando…",
+    "sentTitle": "Revisa tu bandeja de entrada",
+    "sentDescription": "Enviamos un enlace de acceso a {email}. Ábrelo en este dispositivo.",
+    "tryAgain": "Usar otro email",
+    "error": "Algo salió mal. Inténtalo de nuevo."
+  },
+  "landing": {
+    "hero": {
+      "badge": "Magia fotográfica con IA",
+      "title": "Una foto. Un tú completamente nuevo.",
+      "subtitle": "Sube una foto, elige un estilo y deja que la IA haga la magia. Sin ajustes, sin conocimientos — solo wow.",
+      "cta": "Prueba gratis",
+      "secondaryCta": "Ver los estilos",
+      "beforeLabel": "Antes",
+      "afterLabel": "Después",
+      "freeNote": "3 creaciones gratis cada mes"
+    },
+    "howItWorks": {
+      "title": "Cómo funciona",
+      "subtitle": "Tres toques entre tú y tu nuevo look",
+      "steps": {
+        "upload": {
+          "title": "Sube una foto",
+          "description": "Cualquier selfie o retrato funciona genial"
+        },
+        "style": {
+          "title": "Elige un estilo",
+          "description": "15 looks cuidadosamente diseñados"
+        },
+        "result": {
+          "title": "Recibe tu resultado",
+          "description": "Listo en segundos — descarga y comparte"
+        }
+      }
+    },
+    "showcase": {
+      "title": "Elige tu vibra",
+      "subtitle": "De héroe de anime a portada de revista — a un toque de distancia",
+      "cta": "Pruébalos todos"
+    },
+    "benefits": {
+      "title": "Por qué AIVA",
+      "items": {
+        "simple": {
+          "title": "Sin prompts, sin ajustes",
+          "description": "Solo elige un estilo — nosotros nos encargamos de toda la magia."
+        },
+        "private": {
+          "title": "Privado por defecto",
+          "description": "Tus fotos se guardan de forma segura y solo tú puedes verlas."
+        },
+        "quality": {
+          "title": "Calidad impresionante",
+          "description": "Resultados nítidos y listos para compartir que lucen bien en todas partes."
+        }
+      }
+    },
+    "pricing": {
+      "title": "Precios simples",
+      "subtitle": "Empieza gratis. Mejora cuando te enamores.",
+      "free": {
+        "name": "Gratis",
+        "price": "0 $",
+        "period": "para siempre",
+        "features": {
+          "credits": "3 creaciones cada mes",
+          "styles": "Los 15 estilos",
+          "quality": "Descargas en HD"
+        },
+        "cta": "Prueba gratis"
+      },
+      "pro": {
+        "name": "Pro",
+        "badge": "Próximamente",
+        "features": {
+          "unlimited": "Muchas más creaciones",
+          "newStyles": "Nuevos estilos primero",
+          "speed": "Velocidad prioritaria"
+        }
+      }
+    },
+    "footer": {
+      "rights": "© {year} AIVA. Todos los derechos reservados."
+    }
+  },
+  "authGate": {
+    "title": "Inicia sesión para continuar",
+    "description": "Toma segundos — enlace mágico o Google, sin contraseñas.",
+    "cta": "Iniciar sesión"
+  },
+  "history": {
+    "title": "Tus creaciones",
+    "back": "Volver al historial",
+    "emptyTitle": "Aún no hay nada aquí",
+    "emptyDescription": "Tus imágenes generadas aparecerán aquí."
+  },
+  "account": {
+    "title": "Cuenta",
+    "email": "Email",
+    "plan": "Plan",
+    "planFree": "Gratis",
+    "proSoon": "Pro llegará pronto",
+    "credits": "Creaciones restantes",
+    "creditsValue": "{credits} de {total}",
+    "creditsReset": "Se renuevan el",
+    "language": "Idioma"
+  },
+  "create": {
+    "upload": {
+      "step": "Sube tu foto",
+      "title": "Añade una foto",
+      "hint": "Toca aquí o arrastra una imagen",
+      "formats": "JPG, PNG, WEBP o HEIC · hasta 10 MB",
+      "uploading": "Subiendo tu foto…",
+      "changePhoto": "Cambiar foto",
+      "previewAlt": "Tu foto subida",
+      "photoReady": "Foto lista"
+    },
+    "styleStep": {
+      "title": "Elige un estilo"
+    },
+    "generate": {
+      "selectedLabel": "Estilo seleccionado",
+      "cta": "Crear"
+    },
+    "progress": {
+      "title": "Creando tu nuevo estilo…",
+      "steps": {
+        "analyzing": "Analizando tu foto",
+        "styling": "Aplicando el estilo",
+        "details": "Añadiendo los últimos detalles"
+      },
+      "hint": "Normalmente tarda menos de un minuto"
+    },
+    "result": {
+      "title": "¡Tu nuevo look está listo!",
+      "resultAlt": "Tu foto en estilo {style}",
+      "versionLabel": "Versión {current} / {total}",
+      "download": "Descargar",
+      "share": "Compartir",
+      "copied": "¡Enlace copiado!",
+      "regenerate": "Otra versión",
+      "changeStyle": "Cambiar estilo"
+    },
+    "noCredits": {
+      "title": "Te quedaste sin creaciones",
+      "description": "El plan gratis incluye 3 creaciones al mes y se renovarán pronto. Los planes Pro están en camino.",
+      "back": "Volver a los estilos"
+    },
+    "failed": {
+      "title": "No funcionó",
+      "description": "La magia falló esta vez — tu crédito fue devuelto. Inténtalo otra vez.",
+      "back": "Volver a los estilos"
+    }
+  },
+  "errors": {
+    "unauthorized": "Inicia sesión para continuar.",
+    "invalid_request": "Algo no cuadra con esa solicitud. Inténtalo de nuevo.",
+    "upload_too_large": "Esta foto supera los 10 MB. Elige una más pequeña.",
+    "unsupported_format": "No podemos leer este archivo. Prueba con JPG, PNG, WEBP o HEIC.",
+    "rate_limited": "Demasiados intentos seguidos. Espera un minuto y vuelve a intentarlo.",
+    "no_credits": "Se te acabaron las creaciones gratis de este mes.",
+    "generation_failed": "La generación falló — tu crédito fue devuelto.",
+    "not_found": "No pudimos encontrar eso.",
+    "internal": "Algo salió mal de nuestro lado. Inténtalo de nuevo.",
+    "unknown": "Algo salió mal. Revisa tu conexión e inténtalo de nuevo."
+  },
+  "styles": {
+    "categories": {
+      "all": "Todos",
+      "trending": "Tendencia",
+      "creative": "Creativo",
+      "professional": "Profesional",
+      "fun": "Diversión"
+    },
+    "items": {
+      "anime-dream": {
+        "name": "Sueño Anime",
+        "description": "Conviértete en héroe de anime"
+      },
+      "pixar-character": {
+        "name": "Personaje Pixar",
+        "description": "Tu propio momento de película animada"
+      },
+      "cinematic-movie": {
+        "name": "Cine Épico",
+        "description": "Un fotograma de tu blockbuster"
+      },
+      "luxury-magazine": {
+        "name": "Revista de Lujo",
+        "description": "Glamour de estrella de portada"
+      },
+      "vintage-film": {
+        "name": "Película Vintage",
+        "description": "Atmósfera analógica atemporal"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "description": "Tu yo del futuro neón"
+      },
+      "fantasy-hero": {
+        "name": "Héroe de Fantasía",
+        "description": "Una leyenda de otro reino"
+      },
+      "comic-book": {
+        "name": "Cómic",
+        "description": "¡Pow! Directo de un cómic"
+      },
+      "watercolor": {
+        "name": "Acuarela",
+        "description": "Retrato suave pintado a mano"
+      },
+      "oil-painting": {
+        "name": "Óleo",
+        "description": "Obra maestra clásica de galería"
+      },
+      "linkedin-portrait": {
+        "name": "Retrato LinkedIn",
+        "description": "Foto profesional impecable"
+      },
+      "startup-founder": {
+        "name": "Fundador de Startup",
+        "description": "Look de visionario seguro"
+      },
+      "influencer-style": {
+        "name": "Estilo Influencer",
+        "description": "Brillo social que detiene el scroll"
+      },
+      "retro-90s": {
+        "name": "Retro 90s",
+        "description": "De vuelta a la década neón"
+      },
+      "game-character": {
+        "name": "Personaje de Videojuego",
+        "description": "Tu héroe jugable"
+      }
+    }
+  }
+}

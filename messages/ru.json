@@ -122,7 +122,8 @@
     "proSoon": "Pro скоро",
     "credits": "Осталось генераций",
     "creditsValue": "{credits} из {total}",
-    "creditsReset": "Обновятся"
+    "creditsReset": "Обновятся",
+    "language": "Язык"
   },
   "create": {
     "upload": {

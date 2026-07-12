@@ -271,7 +271,7 @@ POST /api/generations/[id]/variants    -- regenerate: то же, version+1
 | 7 | ✅ **AI-генерация** | generation.service + OpenAI-адаптер, кредиты, state machine, polling, премиальный экран ожидания |
 | 8 | ✅ **Результат + версии** | result-viewer, слайдер версий, regenerate, download/share |
 | 9 | ✅ **История + аккаунт** | `/history`, `/account` |
-| 10 | **Локализация** | next-intl, 4 словаря, переключатель языка |
+| 10 | ✅ **Локализация** | next-intl, 4 словаря, переключатель языка |
 | 11 | **PWA** | manifest, SW, иконки, установка |
 | 12 | **Аналитика + полировка** | события, edge cases, empty states, финальный проход по UX |
 

@@ -3,6 +3,7 @@ import "server-only";
 import {
   ensureMonthlyCredits,
   findUserById,
+  updateUserLanguage,
   type UserRecord,
 } from "../repositories/user.repository";
 
@@ -30,4 +31,8 @@ export async function getUserProfile(userId: string): Promise<UserProfileDto | n
   await ensureMonthlyCredits(userId);
   const record = await findUserById(userId);
   return record ? toProfileDto(record) : null;
+}
+
+export async function setUserLanguage(userId: string, language: string): Promise<void> {
+  await updateUserLanguage(userId, language);
 }

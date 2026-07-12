@@ -1,2 +1,2 @@
-export { type AppLocale } from "./routing";
-export { Link, useRouter, getPathname } from "./navigation";
+export { LOCALES, type AppLocale } from "./routing";
+export { Link, usePathname, useRouter, getPathname } from "./navigation";

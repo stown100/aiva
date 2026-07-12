@@ -1,1 +1,259 @@
-{}
+{
+  "common": {
+    "appName": "AIVA",
+    "tagline": "Yeni tarzını yarat",
+    "tryForFree": "Ücretsiz dene",
+    "create": "Oluştur",
+    "history": "Geçmiş",
+    "account": "Hesap",
+    "signOut": "Çıkış yap",
+    "retry": "Tekrar dene",
+    "creditsLeft": "{count, plural, =1 {# hak kaldı} other {# hak kaldı}}"
+  },
+  "auth": {
+    "title": "AIVA'ya hoş geldin",
+    "subtitle": "Yeni tarzını yaratmak için giriş yap",
+    "google": "Google ile devam et",
+    "or": "veya",
+    "emailLabel": "E-posta",
+    "emailPlaceholder": "sen@ornek.com",
+    "sendLink": "Giriş bağlantısı gönder",
+    "sending": "Gönderiliyor…",
+    "sentTitle": "Gelen kutunu kontrol et",
+    "sentDescription": "{email} adresine bir giriş bağlantısı gönderdik. Bu cihazda aç.",
+    "tryAgain": "Başka bir e-posta kullan",
+    "error": "Bir şeyler ters gitti. Lütfen tekrar dene."
+  },
+  "landing": {
+    "hero": {
+      "badge": "Yapay zekâ fotoğraf sihri",
+      "title": "Tek fotoğraf. Yepyeni bir sen.",
+      "subtitle": "Bir fotoğraf yükle, bir tarz seç — sihri yapay zekâ yapsın. Ayar yok, beceri gerekmez, sadece vay be.",
+      "cta": "Ücretsiz dene",
+      "secondaryCta": "Tarzlara göz at",
+      "beforeLabel": "Önce",
+      "afterLabel": "Sonra",
+      "freeNote": "Her ay 3 ücretsiz oluşturma"
+    },
+    "howItWorks": {
+      "title": "Nasıl çalışır",
+      "subtitle": "Yeni görünümüne üç dokunuş kaldı",
+      "steps": {
+        "upload": {
+          "title": "Fotoğraf yükle",
+          "description": "Herhangi bir selfie veya portre harika olur"
+        },
+        "style": {
+          "title": "Bir tarz seç",
+          "description": "Özenle hazırlanmış 15 görünüm"
+        },
+        "result": {
+          "title": "Sonucunu al",
+          "description": "Saniyeler içinde hazır — indir ve paylaş"
+        }
+      }
+    },
+    "showcase": {
+      "title": "Havanı seç",
+      "subtitle": "Anime kahramanından dergi kapağına — tek dokunuş uzakta",
+      "cta": "Hepsini dene"
+    },
+    "benefits": {
+      "title": "Neden AIVA",
+      "items": {
+        "simple": {
+          "title": "Komut yok, ayar yok",
+          "description": "Sadece bir tarz seç — sihrin tamamını biz hallederiz."
+        },
+        "private": {
+          "title": "Varsayılan olarak gizli",
+          "description": "Fotoğrafların güvenle saklanır ve sadece sen görebilirsin."
+        },
+        "quality": {
+          "title": "Çarpıcı kalite",
+          "description": "Her yerde harika görünen, paylaşıma hazır net sonuçlar."
+        }
+      }
+    },
+    "pricing": {
+      "title": "Basit fiyatlandırma",
+      "subtitle": "Ücretsiz başla. Âşık olunca yükselt.",
+      "free": {
+        "name": "Ücretsiz",
+        "price": "0 $",
+        "period": "sonsuza dek",
+        "features": {
+          "credits": "Her ay 3 oluşturma",
+          "styles": "15 tarzın tamamı",
+          "quality": "HD indirme"
+        },
+        "cta": "Ücretsiz dene"
+      },
+      "pro": {
+        "name": "Pro",
+        "badge": "Çok yakında",
+        "features": {
+          "unlimited": "Çok daha fazla oluşturma",
+          "newStyles": "Yeni tarzlara ilk erişim",
+          "speed": "Öncelikli hız"
+        }
+      }
+    },
+    "footer": {
+      "rights": "© {year} AIVA. Tüm hakları saklıdır."
+    }
+  },
+  "authGate": {
+    "title": "Devam etmek için giriş yap",
+    "description": "Saniyeler sürer — sihirli bağlantı veya Google, şifre yok.",
+    "cta": "Giriş yap"
+  },
+  "history": {
+    "title": "Çalışmaların",
+    "back": "Geçmişe dön",
+    "emptyTitle": "Burası henüz boş",
+    "emptyDescription": "Oluşturduğun görseller burada görünecek."
+  },
+  "account": {
+    "title": "Hesap",
+    "email": "E-posta",
+    "plan": "Plan",
+    "planFree": "Ücretsiz",
+    "proSoon": "Pro çok yakında",
+    "credits": "Kalan oluşturma",
+    "creditsValue": "{credits} / {total}",
+    "creditsReset": "Yenilenme tarihi",
+    "language": "Dil"
+  },
+  "create": {
+    "upload": {
+      "step": "Fotoğrafını yükle",
+      "title": "Fotoğraf ekle",
+      "hint": "Buraya dokun veya bir görsel sürükle",
+      "formats": "JPG, PNG, WEBP veya HEIC · en fazla 10 MB",
+      "uploading": "Fotoğrafın yükleniyor…",
+      "changePhoto": "Fotoğrafı değiştir",
+      "previewAlt": "Yüklediğin fotoğraf",
+      "photoReady": "Fotoğraf hazır"
+    },
+    "styleStep": {
+      "title": "Bir tarz seç"
+    },
+    "generate": {
+      "selectedLabel": "Seçilen tarz",
+      "cta": "Oluştur"
+    },
+    "progress": {
+      "title": "Yeni tarzın oluşturuluyor…",
+      "steps": {
+        "analyzing": "Fotoğrafın analiz ediliyor",
+        "styling": "Tarz uygulanıyor",
+        "details": "Son dokunuşlar ekleniyor"
+      },
+      "hint": "Genellikle bir dakikadan az sürer"
+    },
+    "result": {
+      "title": "Yeni görünümün hazır!",
+      "resultAlt": "{style} tarzındaki fotoğrafın",
+      "versionLabel": "Sürüm {current} / {total}",
+      "download": "İndir",
+      "share": "Paylaş",
+      "copied": "Bağlantı kopyalandı!",
+      "regenerate": "Başka bir sürüm",
+      "changeStyle": "Tarzı değiştir"
+    },
+    "noCredits": {
+      "title": "Oluşturma hakların bitti",
+      "description": "Ücretsiz plan ayda 3 oluşturma içerir ve yakında yenilenecek. Pro planlar yolda.",
+      "back": "Tarzlara dön"
+    },
+    "failed": {
+      "title": "Bu sefer olmadı",
+      "description": "Sihir bu kez tutmadı — hakkın iade edildi. Bir kez daha dene.",
+      "back": "Tarzlara dön"
+    }
+  },
+  "errors": {
+    "unauthorized": "Devam etmek için giriş yap.",
+    "invalid_request": "İstekte bir sorun var. Lütfen tekrar dene.",
+    "upload_too_large": "Bu fotoğraf 10 MB'tan büyük. Daha küçük birini seç.",
+    "unsupported_format": "Bu dosyayı okuyamıyoruz. JPG, PNG, WEBP veya HEIC dene.",
+    "rate_limited": "Art arda çok fazla deneme. Bir dakika bekleyip tekrar dene.",
+    "no_credits": "Bu ayki ücretsiz oluşturma hakların bitti.",
+    "generation_failed": "Oluşturma başarısız oldu — hakkın iade edildi.",
+    "not_found": "Bunu bulamadık.",
+    "internal": "Bizim tarafta bir şeyler ters gitti. Lütfen tekrar dene.",
+    "unknown": "Bir şeyler ters gitti. Bağlantını kontrol edip tekrar dene."
+  },
+  "styles": {
+    "categories": {
+      "all": "Tümü",
+      "trending": "Trend",
+      "creative": "Yaratıcı",
+      "professional": "Profesyonel",
+      "fun": "Eğlence"
+    },
+    "items": {
+      "anime-dream": {
+        "name": "Anime Rüyası",
+        "description": "Bir anime kahramanı ol"
+      },
+      "pixar-character": {
+        "name": "Pixar Karakteri",
+        "description": "Kendi animasyon filmi anın"
+      },
+      "cinematic-movie": {
+        "name": "Sinematik Film",
+        "description": "Gişe rekortmeni filminden bir kare"
+      },
+      "luxury-magazine": {
+        "name": "Lüks Dergi",
+        "description": "Kapak yıldızı ışıltısı"
+      },
+      "vintage-film": {
+        "name": "Vintage Film",
+        "description": "Zamansız analog havası"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "description": "Neon geleceğin sen"
+      },
+      "fantasy-hero": {
+        "name": "Fantastik Kahraman",
+        "description": "Başka bir diyardan bir efsane"
+      },
+      "comic-book": {
+        "name": "Çizgi Roman",
+        "description": "Bam! Doğrudan çizgi romandan"
+      },
+      "watercolor": {
+        "name": "Suluboya",
+        "description": "Yumuşak, elle boyanmış portre"
+      },
+      "oil-painting": {
+        "name": "Yağlı Boya",
+        "description": "Klasik galeri şaheseri"
+      },
+      "linkedin-portrait": {
+        "name": "LinkedIn Portresi",
+        "description": "Kusursuz profesyonel vesikalık"
+      },
+      "startup-founder": {
+        "name": "Startup Kurucusu",
+        "description": "Kendinden emin vizyoner görünüm"
+      },
+      "influencer-style": {
+        "name": "Influencer Tarzı",
+        "description": "Akışı durduran sosyal ışıltı"
+      },
+      "retro-90s": {
+        "name": "Retro 90'lar",
+        "description": "Neon on yıla geri dön"
+      },
+      "game-character": {
+        "name": "Oyun Karakteri",
+        "description": "Oynanabilir kahramanın"
+      }
+    }
+  }
+}

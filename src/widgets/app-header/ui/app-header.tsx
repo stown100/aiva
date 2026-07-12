@@ -1,6 +1,7 @@
 import { Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { LanguageSwitcher } from "@/features/switch-language";
 import { ROUTES } from "@/shared/config";
 import { Link } from "@/shared/i18n";
 
@@ -19,7 +20,10 @@ export function AppHeader() {
           <span className="text-lg font-bold tracking-tight">{t("appName")}</span>
         </Link>
 
-        <HeaderUserArea />
+        <div className="flex items-center gap-1.5">
+          <LanguageSwitcher />
+          <HeaderUserArea />
+        </div>
       </div>
     </header>
   );

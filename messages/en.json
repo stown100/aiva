@@ -122,7 +122,8 @@
     "proSoon": "Pro is coming soon",
     "credits": "Creations left",
     "creditsValue": "{credits} of {total}",
-    "creditsReset": "Refresh on"
+    "creditsReset": "Refresh on",
+    "language": "Language"
   },
   "create": {
     "upload": {

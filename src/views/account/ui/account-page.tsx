@@ -4,6 +4,7 @@ import { useFormatter, useTranslations } from "next-intl";
 
 import { useMe } from "@/entities/user";
 import { SignOutButton } from "@/features/sign-out";
+import { LanguageSwitcher } from "@/features/switch-language";
 import { FREE_MONTHLY_CREDITS } from "@/shared/config";
 import { Badge } from "@/shared/ui/badge";
 import { Card, CardContent } from "@/shared/ui/card";
@@ -65,6 +66,11 @@ export function AccountPage() {
                   <span className="text-sm font-medium">
                     {format.dateTime(new Date(profile.creditsResetAt), { dateStyle: "long" })}
                   </span>
+                </div>
+
+                <div className="flex items-center justify-between gap-4 py-3">
+                  <span className="text-sm text-muted-foreground">{t("account.language")}</span>
+                  <LanguageSwitcher appearance="labeled" />
                 </div>
               </CardContent>
             </Card>
