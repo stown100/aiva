@@ -7,6 +7,7 @@
     "history": "История",
     "account": "Аккаунт",
     "signOut": "Выйти",
+    "retry": "Повторить",
     "creditsLeft": "{count, plural, one {Осталась # генерация} few {Осталось # генерации} other {Осталось # генераций}}"
   },
   "auth": {
@@ -115,11 +116,16 @@
       "formats": "JPG, PNG, WEBP или HEIC · до 10 МБ",
       "uploading": "Загружаем фото…",
       "changePhoto": "Заменить фото",
-      "previewAlt": "Загруженное фото"
+      "previewAlt": "Загруженное фото",
+      "photoReady": "Фото готово"
     },
     "styleStep": {
-      "title": "Выбери стиль",
-      "comingSoon": "Галерея стилей появится на следующем шаге разработки."
+      "title": "Выбери стиль"
+    },
+    "generate": {
+      "selectedLabel": "Выбранный стиль",
+      "cta": "Создать",
+      "soon": "Генерация появится на следующем шаге разработки"
     }
   },
   "errors": {
@@ -134,6 +140,7 @@
   },
   "styles": {
     "categories": {
+      "all": "Все",
       "trending": "В тренде",
       "creative": "Креатив",
       "professional": "Работа",
