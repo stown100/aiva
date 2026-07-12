@@ -14,7 +14,7 @@ export function GenerateBar({ styleName, onGenerate }: GenerateBarProps) {
   const t = useTranslations("create.generate");
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-30 border-t bg-background/90 backdrop-blur-md">
+    <div className="fixed inset-x-0 bottom-0 z-30 border-t bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-2xl items-center justify-between gap-4 px-4 py-3">
         <div className="min-w-0">
           <p className="text-xs text-muted-foreground">{t("selectedLabel")}</p>

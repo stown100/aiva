@@ -11,7 +11,7 @@ export function AppHeader() {
   const t = useTranslations("common");
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/70 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b bg-background/70 pt-[env(safe-area-inset-top)] backdrop-blur-md">
       <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4">
         <Link href={ROUTES.home} className="flex items-center gap-2">
           <span className="bg-brand-gradient flex size-7 items-center justify-center rounded-lg text-white">
