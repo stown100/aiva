@@ -264,7 +264,7 @@ POST /api/generations/[id]/variants    -- regenerate: то же, version+1
 |---|---|---|
 | 1 | ✅ **Каркас проекта** | Next.js 16 + TS strict + Tailwind 4 + shadcn/ui + Framer Motion + Zustand; FSD-структура папок; ESLint/Prettier; env-шаблон |
 | 2 | ✅ **UI-система + лендинг** | Токены темы, базовые компоненты, app-header, лендинг `/`; сюда же перенесена next-intl-инфраструктура (роутинг `/[locale]/`, словари en/ru; полные переводы tr/es — в шаге 10) |
-| 3 | **БД + Supabase** | SQL-миграции, RLS, `consume_credit()`, seed 15 стилей, бакеты |
+| 3 | ✅ **БД + Supabase** | SQL-миграции, RLS, `consume_credit()`, seed 15 стилей, бакеты; инструкция по применению — `supabase/README.md` |
 | 4 | **Аутентификация** | Supabase Auth (magic link + Google), `users`-зеркало, guard'ы |
 | 5 | **Загрузка фото** | `/api/upload` (sharp, HEIC, EXIF), widget photo-uploader, превью |
 | 6 | **Выбор стиля** | `/api/styles`, style-gallery с категориями, StyleCard |
