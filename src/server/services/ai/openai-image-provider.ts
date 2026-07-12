@@ -5,10 +5,6 @@ import OpenAI, { toFile } from "openai";
 import { getServerEnv } from "../../lib/env";
 import type { ImageAiProvider, ImageTransformInput } from "./types";
 
-const MODEL = "gpt-image-1";
-/** Cost/quality balance for the MVP; bump to "high" for production polish. */
-const QUALITY = "medium";
-
 let client: OpenAI | null = null;
 
 function getClient(): OpenAI {
@@ -18,14 +14,15 @@ function getClient(): OpenAI {
 
 export const openAiImageProvider: ImageAiProvider = {
   async transform({ image, mimeType, prompt, targetSize }: ImageTransformInput): Promise<Buffer> {
+    const { OPENAI_IMAGE_MODEL, OPENAI_IMAGE_QUALITY } = getServerEnv();
     const file = await toFile(image, "photo.jpg", { type: mimeType });
 
     const response = await getClient().images.edit({
-      model: MODEL,
+      model: OPENAI_IMAGE_MODEL,
       image: file,
       prompt,
       size: targetSize,
-      quality: QUALITY,
+      quality: OPENAI_IMAGE_QUALITY,
       n: 1,
     });
 
