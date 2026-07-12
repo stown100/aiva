@@ -10,6 +10,7 @@ import { track } from "@/shared/analytics";
 import { AppHeader } from "@/widgets/app-header";
 import { GenerationProgress } from "@/widgets/generation-progress";
 import { PhotoUploader } from "@/widgets/photo-uploader";
+import { ResultViewer } from "@/widgets/result-viewer";
 import { StyleGallery } from "@/widgets/style-gallery";
 
 import { useCreateFlowStore } from "../model/create-flow-store";
@@ -17,7 +18,6 @@ import { FlowMessage } from "./flow-message";
 import { GenerateBar } from "./generate-bar";
 import { GuestGate } from "./guest-gate";
 import { PhotoStrip } from "./photo-strip";
-import { ResultPreview } from "./result-preview";
 
 export function CreatePage() {
   const t = useTranslations();
@@ -85,7 +85,7 @@ export function CreatePage() {
             )}
 
             {flow.status === "completed" && flow.generation && (
-              <ResultPreview
+              <ResultViewer
                 generation={flow.generation}
                 styleName={styleName}
                 onRegenerate={handleRegenerate}

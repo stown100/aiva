@@ -138,6 +138,10 @@
     "result": {
       "title": "Твой новый образ готов!",
       "resultAlt": "Твоё фото в стиле {style}",
+      "versionLabel": "Версия {current} / {total}",
+      "download": "Скачать",
+      "share": "Поделиться",
+      "copied": "Ссылка скопирована!",
       "regenerate": "Ещё вариант",
       "changeStyle": "Другой стиль"
     },

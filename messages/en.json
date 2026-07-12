@@ -138,6 +138,10 @@
     "result": {
       "title": "Your new look is ready!",
       "resultAlt": "Your photo in the {style} style",
+      "versionLabel": "Version {current} / {total}",
+      "download": "Download",
+      "share": "Share",
+      "copied": "Link copied!",
       "regenerate": "Another version",
       "changeStyle": "Change style"
     },
