@@ -1,9 +1,10 @@
 import { Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { Button } from "@/shared/ui/button";
 import { ROUTES } from "@/shared/config";
 import { Link } from "@/shared/i18n";
+
+import { HeaderUserArea } from "./header-user-area";
 
 export function AppHeader() {
   const t = useTranslations("common");
@@ -18,13 +19,7 @@ export function AppHeader() {
           <span className="text-lg font-bold tracking-tight">{t("appName")}</span>
         </Link>
 
-        <Button
-          size="sm"
-          className="bg-brand-gradient border-0 text-white shadow-md"
-          render={<Link href={ROUTES.create} />}
-        >
-          {t("tryForFree")}
-        </Button>
+        <HeaderUserArea />
       </div>
     </header>
   );

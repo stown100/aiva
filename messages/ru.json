@@ -6,7 +6,23 @@
     "create": "Создать",
     "history": "История",
     "account": "Аккаунт",
-    "backHome": "На главную"
+    "backHome": "На главную",
+    "signOut": "Выйти",
+    "creditsLeft": "{count, plural, one {Осталась # генерация} few {Осталось # генерации} other {Осталось # генераций}}"
+  },
+  "auth": {
+    "title": "Добро пожаловать в AIVA",
+    "subtitle": "Войди, чтобы создать свой новый стиль",
+    "google": "Продолжить с Google",
+    "or": "или",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "sendLink": "Отправить ссылку для входа",
+    "sending": "Отправляем…",
+    "sentTitle": "Проверь почту",
+    "sentDescription": "Мы отправили ссылку для входа на {email}. Открой её на этом устройстве.",
+    "tryAgain": "Другой email",
+    "error": "Что-то пошло не так. Попробуй ещё раз."
   },
   "landing": {
     "hero": {

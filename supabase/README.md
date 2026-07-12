@@ -41,6 +41,17 @@ select id, name from storage.buckets;        -- originals, results
 select * from public.styles_public limit 3;  -- без prompt_template
 ```
 
+## 4. Настройка аутентификации
+
+**Authentication → URL Configuration:**
+
+- Site URL: `http://localhost:3000` (на проде — домен приложения)
+- Redirect URLs: добавить `http://localhost:3000/api/auth/callback`
+
+Magic link (email OTP) работает из коробки; встроенный почтовый сервис Supabase имеет лимит ~3-4 письма в час — для продакшена подключить SMTP (Settings → Auth → SMTP).
+
+**Google OAuth (опционально):** Authentication → Providers → Google → включить, вставить Client ID/Secret из [Google Cloud Console](https://console.cloud.google.com/apis/credentials) (OAuth 2.0 Client, redirect URI указан на той же странице провайдера в Supabase).
+
 ## Замечания
 
 - Оба бакета приватные, без storage-политик: доступ только у сервера (service role), клиент получает подписанные ссылки с TTL.

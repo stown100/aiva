@@ -1,0 +1,31 @@
+import "server-only";
+
+import { getSupabaseAdmin } from "../lib/supabase-admin";
+
+export interface UserRecord {
+  id: string;
+  email: string;
+  language: string;
+  credits: number;
+  subscription_status: string;
+  created_at: string;
+}
+
+export async function findUserById(userId: string): Promise<UserRecord | null> {
+  const { data, error } = await getSupabaseAdmin()
+    .from("users")
+    .select("id, email, language, credits, subscription_status, created_at")
+    .eq("id", userId)
+    .maybeSingle();
+
+  if (error) throw new Error(`users select failed: ${error.message}`);
+  return data;
+}
+
+/** Lazy monthly free-credit reset; no-op unless the reset date has passed. */
+export async function ensureMonthlyCredits(userId: string): Promise<void> {
+  const { error } = await getSupabaseAdmin().rpc("ensure_monthly_credits", {
+    p_user_id: userId,
+  });
+  if (error) throw new Error(`ensure_monthly_credits failed: ${error.message}`);
+}

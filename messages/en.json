@@ -6,7 +6,23 @@
     "create": "Create",
     "history": "History",
     "account": "Account",
-    "backHome": "Back home"
+    "backHome": "Back home",
+    "signOut": "Sign out",
+    "creditsLeft": "{count, plural, =1 {# creation left} other {# creations left}}"
+  },
+  "auth": {
+    "title": "Welcome to AIVA",
+    "subtitle": "Sign in to create your new style",
+    "google": "Continue with Google",
+    "or": "or",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "sendLink": "Send sign-in link",
+    "sending": "Sending…",
+    "sentTitle": "Check your inbox",
+    "sentDescription": "We sent a sign-in link to {email}. Open it on this device.",
+    "tryAgain": "Use another email",
+    "error": "Something went wrong. Please try again."
   },
   "landing": {
     "hero": {
