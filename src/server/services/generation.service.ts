@@ -7,6 +7,7 @@ import {
   findGenerationById,
   findGenerationForUser,
   insertGeneration,
+  listGenerationsByUser,
   updateGenerationStatus,
   type GenerationDbStatus,
 } from "../repositories/generation.repository";
@@ -19,6 +20,7 @@ import {
   getNextVersionNumber,
   insertVariant,
   listVariants,
+  listVariantsForGenerations,
 } from "../repositories/variant.repository";
 import {
   createSignedUrl,
@@ -140,6 +142,46 @@ export async function runGeneration(generationId: string): Promise<void> {
     await updateGenerationStatus(generationId, "failed", API_ERROR_CODES.generationFailed);
     await refundCredit(generation.user_id, generationId);
   }
+}
+
+const HISTORY_LIMIT = 50;
+
+export interface HistoryItemDto {
+  id: string;
+  styleId: string;
+  createdAt: string;
+  previewUrl: string;
+  versionsCount: number;
+}
+
+/** Completed generations with a signed thumbnail of the latest variant. */
+export async function getUserHistory(userId: string): Promise<HistoryItemDto[]> {
+  const generations = await listGenerationsByUser(userId, HISTORY_LIMIT);
+  const variants = await listVariantsForGenerations(generations.map((g) => g.id));
+
+  const latestByGeneration = new Map<string, { storagePath: string; count: number }>();
+  for (const variant of variants) {
+    const current = latestByGeneration.get(variant.generation_id);
+    latestByGeneration.set(variant.generation_id, {
+      storagePath: variant.storage_path, // variants are sorted ascending — the last one wins
+      count: (current?.count ?? 0) + 1,
+    });
+  }
+
+  return Promise.all(
+    generations
+      .filter((generation) => latestByGeneration.has(generation.id))
+      .map(async (generation) => {
+        const latest = latestByGeneration.get(generation.id)!;
+        return {
+          id: generation.id,
+          styleId: generation.style_id,
+          createdAt: generation.created_at,
+          previewUrl: await createSignedUrl(STORAGE_BUCKETS.results, latest.storagePath),
+          versionsCount: latest.count,
+        };
+      }),
+  );
 }
 
 /** Polled by the client; signs fresh URLs for every variant. */

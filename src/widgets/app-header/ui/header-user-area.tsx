@@ -1,5 +1,6 @@
 "use client";
 
+import { History } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { CreditsBadge, useMe } from "@/entities/user";
@@ -30,7 +31,21 @@ export function HeaderUserArea() {
 
   return (
     <div className="flex items-center gap-1.5">
-      <CreditsBadge credits={profile.credits} label={t("creditsLeft", { count: profile.credits })} />
+      <Button
+        variant="ghost"
+        size="icon-sm"
+        aria-label={t("history")}
+        title={t("history")}
+        render={<Link href={ROUTES.history} />}
+      >
+        <History aria-hidden />
+      </Button>
+      <Link href={ROUTES.account} aria-label={t("account")} title={t("account")}>
+        <CreditsBadge
+          credits={profile.credits}
+          label={t("creditsLeft", { count: profile.credits })}
+        />
+      </Link>
       <SignOutButton onSignedOut={markGuest} />
     </div>
   );

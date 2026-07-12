@@ -103,12 +103,28 @@
       "rights": "© {year} AIVA. Все права защищены."
     }
   },
+  "authGate": {
+    "title": "Войди, чтобы продолжить",
+    "description": "Это занимает секунды — ссылка на почту или Google, без паролей.",
+    "cta": "Войти"
+  },
+  "history": {
+    "title": "Твои работы",
+    "back": "К истории",
+    "emptyTitle": "Здесь пока пусто",
+    "emptyDescription": "Сгенерированные изображения появятся здесь."
+  },
+  "account": {
+    "title": "Аккаунт",
+    "email": "Email",
+    "plan": "План",
+    "planFree": "Бесплатный",
+    "proSoon": "Pro скоро",
+    "credits": "Осталось генераций",
+    "creditsValue": "{credits} из {total}",
+    "creditsReset": "Обновятся"
+  },
   "create": {
-    "guest": {
-      "title": "Войди, чтобы начать творить",
-      "description": "Это занимает секунды — ссылка на почту или Google, без паролей.",
-      "cta": "Войти"
-    },
     "upload": {
       "step": "Загрузи своё фото",
       "title": "Добавь фото",

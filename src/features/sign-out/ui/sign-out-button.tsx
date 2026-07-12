@@ -10,9 +10,11 @@ import { Button } from "@/shared/ui/button";
 
 interface SignOutButtonProps {
   onSignedOut?: () => void;
+  /** "icon" for the compact header button, "labeled" for settings pages. */
+  appearance?: "icon" | "labeled";
 }
 
-export function SignOutButton({ onSignedOut }: SignOutButtonProps) {
+export function SignOutButton({ onSignedOut, appearance = "icon" }: SignOutButtonProps) {
   const t = useTranslations("common");
   const router = useRouter();
 
@@ -22,6 +24,15 @@ export function SignOutButton({ onSignedOut }: SignOutButtonProps) {
     router.push(ROUTES.home);
     router.refresh();
   };
+
+  if (appearance === "labeled") {
+    return (
+      <Button variant="outline" className="gap-2" onClick={() => void handleSignOut()}>
+        <LogOut aria-hidden />
+        {t("signOut")}
+      </Button>
+    );
+  }
 
   return (
     <Button

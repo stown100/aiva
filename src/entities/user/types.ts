@@ -3,5 +3,6 @@ export interface UserProfile {
   email: string;
   language: string;
   credits: number;
+  creditsResetAt: string;
   subscriptionStatus: string;
 }

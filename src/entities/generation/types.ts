@@ -6,6 +6,14 @@ export interface GenerationVariant {
   imageUrl: string;
 }
 
+export interface HistoryItem {
+  id: string;
+  styleId: string;
+  createdAt: string;
+  previewUrl: string;
+  versionsCount: number;
+}
+
 export interface GenerationDetail {
   id: string;
   styleId: string;

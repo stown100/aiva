@@ -65,6 +65,22 @@ export async function findGenerationForUser(
   return data;
 }
 
+export async function listGenerationsByUser(
+  userId: string,
+  limit: number,
+): Promise<GenerationRecord[]> {
+  const { data, error } = await getSupabaseAdmin()
+    .from("generations")
+    .select()
+    .eq("user_id", userId)
+    .eq("status", "completed")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (error) throw new Error(`generations select failed: ${error.message}`);
+  return data ?? [];
+}
+
 export async function updateGenerationStatus(
   id: string,
   status: GenerationDbStatus,

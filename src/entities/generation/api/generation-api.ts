@@ -1,6 +1,10 @@
 import { apiGet, apiPost } from "@/shared/api";
 
-import type { GenerationDetail } from "../types";
+import type { GenerationDetail, HistoryItem } from "../types";
+
+export function fetchHistory(): Promise<HistoryItem[]> {
+  return apiGet<HistoryItem[]>("/api/history");
+}
 
 export function startGeneration(input: {
   originalImageId: string;

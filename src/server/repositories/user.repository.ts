@@ -7,6 +7,7 @@ export interface UserRecord {
   email: string;
   language: string;
   credits: number;
+  credits_reset_at: string;
   subscription_status: string;
   created_at: string;
 }
@@ -14,7 +15,7 @@ export interface UserRecord {
 export async function findUserById(userId: string): Promise<UserRecord | null> {
   const { data, error } = await getSupabaseAdmin()
     .from("users")
-    .select("id, email, language, credits, subscription_status, created_at")
+    .select("id, email, language, credits, credits_reset_at, subscription_status, created_at")
     .eq("id", userId)
     .maybeSingle();
 

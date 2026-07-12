@@ -15,8 +15,9 @@ import { Button } from "@/shared/ui/button";
 interface ResultViewerProps {
   generation: GenerationDetail;
   styleName: string;
-  onRegenerate: () => void;
-  onChangeStyle: () => void;
+  /** Omitted in read-only contexts (history), where regeneration isn't offered. */
+  onRegenerate?: () => void;
+  onChangeStyle?: () => void;
 }
 
 export function ResultViewer({
@@ -35,7 +36,7 @@ export function ResultViewer({
 
   const handleRegenerate = () => {
     reset();
-    onRegenerate();
+    onRegenerate?.();
   };
 
   return (
@@ -106,14 +107,18 @@ export function ResultViewer({
           styleId={generation.styleId}
           shareTitle={resultAlt}
         />
-        <Button variant="outline" className="gap-2" onClick={handleRegenerate}>
-          <RefreshCw aria-hidden />
-          {t("regenerate")}
-        </Button>
-        <Button variant="ghost" className="gap-2" onClick={onChangeStyle}>
-          <Palette aria-hidden />
-          {t("changeStyle")}
-        </Button>
+        {onRegenerate && (
+          <Button variant="outline" className="gap-2" onClick={handleRegenerate}>
+            <RefreshCw aria-hidden />
+            {t("regenerate")}
+          </Button>
+        )}
+        {onChangeStyle && (
+          <Button variant="ghost" className="gap-2" onClick={onChangeStyle}>
+            <Palette aria-hidden />
+            {t("changeStyle")}
+          </Button>
+        )}
       </div>
     </div>
   );

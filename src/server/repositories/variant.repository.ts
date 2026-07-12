@@ -21,6 +21,22 @@ export async function listVariants(generationId: string): Promise<VariantRecord[
   return data ?? [];
 }
 
+/** Variants for a batch of generations in one query (history thumbnails). */
+export async function listVariantsForGenerations(
+  generationIds: string[],
+): Promise<VariantRecord[]> {
+  if (generationIds.length === 0) return [];
+
+  const { data, error } = await getSupabaseAdmin()
+    .from("generation_variants")
+    .select()
+    .in("generation_id", generationIds)
+    .order("version_number", { ascending: true });
+
+  if (error) throw new Error(`generation_variants select failed: ${error.message}`);
+  return data ?? [];
+}
+
 export async function getNextVersionNumber(generationId: string): Promise<number> {
   const { data, error } = await getSupabaseAdmin()
     .from("generation_variants")

@@ -103,12 +103,28 @@
       "rights": "© {year} AIVA. All rights reserved."
     }
   },
+  "authGate": {
+    "title": "Sign in to continue",
+    "description": "It takes seconds — a magic link or Google, no passwords.",
+    "cta": "Sign in"
+  },
+  "history": {
+    "title": "Your creations",
+    "back": "Back to history",
+    "emptyTitle": "Nothing here yet",
+    "emptyDescription": "Your generated images will appear here."
+  },
+  "account": {
+    "title": "Account",
+    "email": "Email",
+    "plan": "Plan",
+    "planFree": "Free",
+    "proSoon": "Pro is coming soon",
+    "credits": "Creations left",
+    "creditsValue": "{credits} of {total}",
+    "creditsReset": "Refresh on"
+  },
   "create": {
-    "guest": {
-      "title": "Sign in to start creating",
-      "description": "It takes seconds — a magic link or Google, no passwords.",
-      "cta": "Sign in"
-    },
     "upload": {
       "step": "Upload your photo",
       "title": "Add a photo",

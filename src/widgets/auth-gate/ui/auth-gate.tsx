@@ -6,8 +6,9 @@ import { Card, CardContent } from "@/shared/ui/card";
 import { ROUTES } from "@/shared/config";
 import { Link } from "@/shared/i18n";
 
-export function GuestGate() {
-  const t = useTranslations("create.guest");
+/** Sign-in prompt shown on protected pages to unauthenticated visitors. */
+export function AuthGate() {
+  const t = useTranslations("authGate");
 
   return (
     <Card className="mx-auto w-full max-w-sm text-center">

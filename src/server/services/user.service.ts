@@ -11,6 +11,7 @@ export interface UserProfileDto {
   email: string;
   language: string;
   credits: number;
+  creditsResetAt: string;
   subscriptionStatus: string;
 }
 
@@ -20,6 +21,7 @@ function toProfileDto(record: UserRecord): UserProfileDto {
     email: record.email,
     language: record.language,
     credits: record.credits,
+    creditsResetAt: record.credits_reset_at,
     subscriptionStatus: record.subscription_status,
   };
 }

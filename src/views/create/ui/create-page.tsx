@@ -8,6 +8,7 @@ import { useMe } from "@/entities/user";
 import { useGenerationFlow } from "@/features/generate-image";
 import { track } from "@/shared/analytics";
 import { AppHeader } from "@/widgets/app-header";
+import { AuthGate } from "@/widgets/auth-gate";
 import { GenerationProgress } from "@/widgets/generation-progress";
 import { PhotoUploader } from "@/widgets/photo-uploader";
 import { ResultViewer } from "@/widgets/result-viewer";
@@ -16,7 +17,6 @@ import { StyleGallery } from "@/widgets/style-gallery";
 import { useCreateFlowStore } from "../model/create-flow-store";
 import { FlowMessage } from "./flow-message";
 import { GenerateBar } from "./generate-bar";
-import { GuestGate } from "./guest-gate";
 import { PhotoStrip } from "./photo-strip";
 
 export function CreatePage() {
@@ -57,7 +57,7 @@ export function CreatePage() {
           <div className="min-h-64 animate-pulse rounded-3xl bg-muted" aria-hidden />
         )}
 
-        {meStatus === "guest" && <GuestGate />}
+        {meStatus === "guest" && <AuthGate />}
 
         {(meStatus === "authenticated" || meStatus === "error") && (
           <>
