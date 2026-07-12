@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
+import { create } from "zustand";
 
 import { ApiClientError } from "@/shared/api";
 
@@ -9,38 +10,46 @@ import type { UserProfile } from "../types";
 
 export type MeStatus = "loading" | "authenticated" | "guest" | "error";
 
-interface UseMeResult {
+interface UserState {
   profile: UserProfile | null;
   status: MeStatus;
   refetch: () => Promise<void>;
   markGuest: () => void;
 }
 
-export function useMe(): UseMeResult {
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [status, setStatus] = useState<MeStatus>("loading");
-
-  const refetch = useCallback(async () => {
+/**
+ * Single shared profile state: every consumer (header credits badge, create
+ * flow, account page) sees the same data, so spending a credit updates the
+ * whole UI without a reload.
+ */
+const useUserStore = create<UserState>((set) => ({
+  profile: null,
+  status: "loading",
+  refetch: async () => {
     try {
-      const me = await fetchMe();
-      setProfile(me);
-      setStatus("authenticated");
+      const profile = await fetchMe();
+      set({ profile, status: "authenticated" });
     } catch (error) {
-      setProfile(null);
-      setStatus(error instanceof ApiClientError && error.status === 401 ? "guest" : "error");
+      set({
+        profile: null,
+        status: error instanceof ApiClientError && error.status === 401 ? "guest" : "error",
+      });
+    }
+  },
+  markGuest: () => set({ profile: null, status: "guest" }),
+}));
+
+let initialFetchStarted = false;
+
+export function useMe(): UserState {
+  const state = useUserStore();
+
+  useEffect(() => {
+    if (!initialFetchStarted) {
+      initialFetchStarted = true;
+      void useUserStore.getState().refetch();
     }
   }, []);
 
-  const markGuest = useCallback(() => {
-    setProfile(null);
-    setStatus("guest");
-  }, []);
-
-  useEffect(() => {
-    // State updates happen after the fetch resolves, not synchronously.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    void refetch();
-  }, [refetch]);
-
-  return { profile, status, refetch, markGuest };
+  return state;
 }

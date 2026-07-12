@@ -12,6 +12,32 @@ export interface OriginalImageRecord {
   size_bytes: number | null;
 }
 
+export async function findOriginalImageForUser(
+  id: string,
+  userId: string,
+): Promise<OriginalImageRecord | null> {
+  const { data, error } = await getSupabaseAdmin()
+    .from("original_images")
+    .select("id, user_id, storage_path, format, width, height, size_bytes")
+    .eq("id", id)
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  if (error) throw new Error(`original_images select failed: ${error.message}`);
+  return data;
+}
+
+export async function findOriginalImageById(id: string): Promise<OriginalImageRecord | null> {
+  const { data, error } = await getSupabaseAdmin()
+    .from("original_images")
+    .select("id, user_id, storage_path, format, width, height, size_bytes")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error) throw new Error(`original_images select failed: ${error.message}`);
+  return data;
+}
+
 interface InsertOriginalImageInput {
   userId: string;
   storagePath: string;

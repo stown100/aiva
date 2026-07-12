@@ -13,6 +13,8 @@ export const API_ERROR_CODES = {
   uploadTooLarge: "upload_too_large",
   unsupportedFormat: "unsupported_format",
   rateLimited: "rate_limited",
+  noCredits: "no_credits",
+  generationFailed: "generation_failed",
   internal: "internal",
 } as const;
 

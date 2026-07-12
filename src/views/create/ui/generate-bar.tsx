@@ -7,10 +7,10 @@ import { Button } from "@/shared/ui/button";
 
 interface GenerateBarProps {
   styleName: string;
+  onGenerate: () => void;
 }
 
-/** Sticky action bar; the CTA is wired to the generation flow in step 7. */
-export function GenerateBar({ styleName }: GenerateBarProps) {
+export function GenerateBar({ styleName, onGenerate }: GenerateBarProps) {
   const t = useTranslations("create.generate");
 
   return (
@@ -23,8 +23,7 @@ export function GenerateBar({ styleName }: GenerateBarProps) {
         <Button
           size="lg"
           className="bg-brand-gradient h-11 shrink-0 gap-2 border-0 px-6 text-white shadow-lg"
-          disabled
-          title={t("soon")}
+          onClick={onGenerate}
         >
           <Sparkles aria-hidden />
           {t("cta")}

@@ -124,8 +124,32 @@
     },
     "generate": {
       "selectedLabel": "Selected style",
-      "cta": "Create",
-      "soon": "Generation arrives in the next build step"
+      "cta": "Create"
+    },
+    "progress": {
+      "title": "Creating your new style…",
+      "steps": {
+        "analyzing": "Analyzing your photo",
+        "styling": "Applying the style",
+        "details": "Adding final details"
+      },
+      "hint": "This usually takes under a minute"
+    },
+    "result": {
+      "title": "Your new look is ready!",
+      "resultAlt": "Your photo in the {style} style",
+      "regenerate": "Another version",
+      "changeStyle": "Change style"
+    },
+    "noCredits": {
+      "title": "You're out of creations",
+      "description": "The free plan includes 3 creations per month, and they'll refresh soon. Pro plans are on the way.",
+      "back": "Back to styles"
+    },
+    "failed": {
+      "title": "That didn't work",
+      "description": "The magic fizzled this time — your credit was returned. Give it another try.",
+      "back": "Back to styles"
     }
   },
   "errors": {
@@ -134,6 +158,8 @@
     "upload_too_large": "This photo is over 10MB. Please pick a smaller one.",
     "unsupported_format": "We can't read this file. Try JPG, PNG, WEBP or HEIC.",
     "rate_limited": "Too many tries in a row. Give it a minute and try again.",
+    "no_credits": "You're out of free creations for this month.",
+    "generation_failed": "Generation failed — your credit was returned.",
     "not_found": "We couldn't find that.",
     "internal": "Something went wrong on our side. Please try again.",
     "unknown": "Something went wrong. Please check your connection and try again."

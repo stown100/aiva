@@ -24,6 +24,14 @@ export async function uploadObject(
   if (error) throw new Error(`storage upload failed (${bucket}/${path}): ${error.message}`);
 }
 
+export async function downloadObject(bucket: StorageBucket, path: string): Promise<Buffer> {
+  const { data, error } = await getSupabaseAdmin().storage.from(bucket).download(path);
+  if (error || !data) {
+    throw new Error(`storage download failed (${bucket}/${path}): ${error?.message}`);
+  }
+  return Buffer.from(await data.arrayBuffer());
+}
+
 export async function createSignedUrl(bucket: StorageBucket, path: string): Promise<string> {
   const { data, error } = await getSupabaseAdmin()
     .storage.from(bucket)

@@ -268,7 +268,7 @@ POST /api/generations/[id]/variants    -- regenerate: то же, version+1
 | 4 | ✅ **Аутентификация** | Supabase Auth (magic link + Google), `users`-зеркало, guard'ы; настройка провайдеров — `supabase/README.md` §4 |
 | 5 | ✅ **Загрузка фото** | `/api/upload` (sharp, HEIC, EXIF), widget photo-uploader, превью |
 | 6 | ✅ **Выбор стиля** | `/api/styles`, style-gallery с категориями, StyleCard |
-| 7 | **AI-генерация** | generation.service + OpenAI-адаптер, кредиты, state machine, polling, премиальный экран ожидания |
+| 7 | ✅ **AI-генерация** | generation.service + OpenAI-адаптер, кредиты, state machine, polling, премиальный экран ожидания |
 | 8 | **Результат + версии** | result-viewer, слайдер версий, regenerate, download/share |
 | 9 | **История + аккаунт** | `/history`, `/account` |
 | 10 | **Локализация** | next-intl, 4 словаря, переключатель языка |
