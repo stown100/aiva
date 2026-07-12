@@ -6,7 +6,6 @@
     "create": "Create",
     "history": "History",
     "account": "Account",
-    "backHome": "Back home",
     "signOut": "Sign out",
     "creditsLeft": "{count, plural, =1 {# creation left} other {# creations left}}"
   },
@@ -103,9 +102,35 @@
       "rights": "© {year} AIVA. All rights reserved."
     }
   },
-  "createPlaceholder": {
-    "title": "The studio is almost ready",
-    "description": "Photo upload and style selection are coming in the next step of the build."
+  "create": {
+    "guest": {
+      "title": "Sign in to start creating",
+      "description": "It takes seconds — a magic link or Google, no passwords.",
+      "cta": "Sign in"
+    },
+    "upload": {
+      "step": "Upload your photo",
+      "title": "Add a photo",
+      "hint": "Tap here or drop an image",
+      "formats": "JPG, PNG, WEBP or HEIC · up to 10MB",
+      "uploading": "Uploading your photo…",
+      "changePhoto": "Change photo",
+      "previewAlt": "Your uploaded photo"
+    },
+    "styleStep": {
+      "title": "Choose a style",
+      "comingSoon": "The style gallery arrives in the next build step."
+    }
+  },
+  "errors": {
+    "unauthorized": "Please sign in to continue.",
+    "invalid_request": "Something looks off with that request. Please try again.",
+    "upload_too_large": "This photo is over 10MB. Please pick a smaller one.",
+    "unsupported_format": "We can't read this file. Try JPG, PNG, WEBP or HEIC.",
+    "rate_limited": "Too many tries in a row. Give it a minute and try again.",
+    "not_found": "We couldn't find that.",
+    "internal": "Something went wrong on our side. Please try again.",
+    "unknown": "Something went wrong. Please check your connection and try again."
   },
   "styles": {
     "categories": {

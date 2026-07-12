@@ -3,6 +3,7 @@ export const ROUTES = {
   create: "/create",
   history: "/history",
   account: "/account",
+  auth: "/auth",
 } as const;
 
 export type AppRoute = (typeof ROUTES)[keyof typeof ROUTES];

@@ -9,6 +9,10 @@ import { NextResponse } from "next/server";
 export const API_ERROR_CODES = {
   unauthorized: "unauthorized",
   notFound: "not_found",
+  invalidRequest: "invalid_request",
+  uploadTooLarge: "upload_too_large",
+  unsupportedFormat: "unsupported_format",
+  rateLimited: "rate_limited",
   internal: "internal",
 } as const;
 
