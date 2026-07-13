@@ -9,6 +9,8 @@ const serverEnvSchema = z.object({
   OPENAI_API_KEY: z.string().min(1),
   OPENAI_IMAGE_MODEL: z.string().min(1).default("gpt-image-1"),
   OPENAI_IMAGE_QUALITY: z.enum(["low", "medium", "high", "auto"]).default("medium"),
+  // Pepper for HMAC-hashing client IPs before storage; rotating it resets all IP quotas.
+  IP_HASH_SECRET: z.string().min(16),
 });
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>;
@@ -27,6 +29,7 @@ export function getServerEnv(): ServerEnv {
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     OPENAI_IMAGE_MODEL: process.env.OPENAI_IMAGE_MODEL,
     OPENAI_IMAGE_QUALITY: process.env.OPENAI_IMAGE_QUALITY,
+    IP_HASH_SECRET: process.env.IP_HASH_SECRET,
   });
   return cachedEnv;
 }

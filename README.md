@@ -16,7 +16,7 @@ npm run dev                  # http://localhost:3000
 
 ### 1. Supabase
 
-Создать проект на [supabase.com](https://supabase.com), применить миграции и seed, включить аутентификацию — пошаговая инструкция в [supabase/README.md](supabase/README.md) (там же — управление кредитами).
+Создан проект на [supabase.com](https://supabase.com), применить миграции и seed, включить аутентификацию — пошаговая инструкция в [supabase/README.md](supabase/README.md) (там же — управление кредитами).
 
 ### 2. Переменные окружения (`.env.local`)
 

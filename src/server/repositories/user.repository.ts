@@ -1,5 +1,7 @@
 import "server-only";
 
+import { FREE_MONTHLY_CREDITS } from "@/shared/config/credits";
+
 import { getSupabaseAdmin } from "../lib/supabase-admin";
 
 export interface UserRecord {
@@ -32,6 +34,7 @@ export async function updateUserLanguage(userId: string, language: string): Prom
 export async function ensureMonthlyCredits(userId: string): Promise<void> {
   const { error } = await getSupabaseAdmin().rpc("ensure_monthly_credits", {
     p_user_id: userId,
+    p_free_credits: FREE_MONTHLY_CREDITS,
   });
   if (error) throw new Error(`ensure_monthly_credits failed: ${error.message}`);
 }

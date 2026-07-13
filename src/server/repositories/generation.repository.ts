@@ -12,6 +12,7 @@ export interface GenerationRecord {
   prompt_version: number;
   status: GenerationStatus;
   error_code: string | null;
+  client_ip_hash: string | null;
   created_at: string;
 }
 
@@ -20,6 +21,7 @@ interface InsertGenerationInput {
   originalImageId: string;
   styleId: string;
   promptVersion: number;
+  clientIpHash: string | null;
 }
 
 export async function insertGeneration(input: InsertGenerationInput): Promise<GenerationRecord> {
@@ -31,6 +33,7 @@ export async function insertGeneration(input: InsertGenerationInput): Promise<Ge
       style_id: input.styleId,
       prompt_version: input.promptVersion,
       status: GenerationStatus.PENDING,
+      client_ip_hash: input.clientIpHash,
     })
     .select()
     .single();
@@ -79,6 +82,19 @@ export async function listGenerationsByUser(
 
   if (error) throw new Error(`generations select failed: ${error.message}`);
   return data ?? [];
+}
+
+/** Rebinds the generation to the hashed IP the latest spend was charged against. */
+export async function updateGenerationClientIpHash(
+  id: string,
+  clientIpHash: string | null,
+): Promise<void> {
+  const { error } = await getSupabaseAdmin()
+    .from("generations")
+    .update({ client_ip_hash: clientIpHash })
+    .eq("id", id);
+
+  if (error) throw new Error(`generations update failed: ${error.message}`);
 }
 
 export async function updateGenerationStatus(

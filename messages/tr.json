@@ -33,7 +33,7 @@
       "secondaryCta": "Tarzlara göz at",
       "beforeLabel": "Önce",
       "afterLabel": "Sonra",
-      "freeNote": "Her ay 3 ücretsiz oluşturma"
+      "freeNote": "Her ay {count} ücretsiz oluşturma"
     },
     "howItWorks": {
       "title": "Nasıl çalışır",
@@ -83,7 +83,7 @@
         "price": "0 $",
         "period": "sonsuza dek",
         "features": {
-          "credits": "Her ay 3 oluşturma",
+          "credits": "Her ay {count} oluşturma",
           "styles": "15 tarzın tamamı",
           "quality": "HD indirme"
         },
@@ -169,7 +169,7 @@
     },
     "noCredits": {
       "title": "Oluşturma hakların bitti",
-      "description": "Ücretsiz plan ayda 3 oluşturma içerir ve yakında yenilenecek. Pro planlar yolda.",
+      "description": "Ücretsiz plan ayda {count} oluşturma içerir ve yakında yenilenecek. Pro planlar yolda.",
       "back": "Tarzlara dön"
     },
     "failed": {

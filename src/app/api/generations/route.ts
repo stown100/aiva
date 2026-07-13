@@ -2,6 +2,7 @@ import { after } from "next/server";
 import { z } from "zod";
 
 import { getSessionUser } from "@/server/auth/session";
+import { getClientIpHash } from "@/server/lib/client-ip";
 import { AppError } from "@/server/lib/errors";
 import { ApiErrorCode, jsonError, jsonOk } from "@/server/lib/http";
 import { checkRateLimit } from "@/server/lib/rate-limit";
@@ -30,7 +31,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { generationId } = await startGeneration(sessionUser.id, parsed.data);
+    const { generationId } = await startGeneration(
+      sessionUser.id,
+      parsed.data,
+      getClientIpHash(request),
+    );
     after(() => runGeneration(generationId));
     return jsonOk({ generationId }, { status: 202 });
   } catch (error) {

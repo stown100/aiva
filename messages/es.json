@@ -33,7 +33,7 @@
       "secondaryCta": "Ver los estilos",
       "beforeLabel": "Antes",
       "afterLabel": "Después",
-      "freeNote": "3 creaciones gratis cada mes"
+      "freeNote": "{count} creaciones gratis cada mes"
     },
     "howItWorks": {
       "title": "Cómo funciona",
@@ -83,7 +83,7 @@
         "price": "0 $",
         "period": "para siempre",
         "features": {
-          "credits": "3 creaciones cada mes",
+          "credits": "{count} creaciones cada mes",
           "styles": "Los 15 estilos",
           "quality": "Descargas en HD"
         },
@@ -169,7 +169,7 @@
     },
     "noCredits": {
       "title": "Te quedaste sin creaciones",
-      "description": "El plan gratis incluye 3 creaciones al mes y se renovarán pronto. Los planes Pro están en camino.",
+      "description": "El plan gratis incluye {count} creaciones al mes y se renovarán pronto. Los planes Pro están en camino.",
       "back": "Volver a los estilos"
     },
     "failed": {

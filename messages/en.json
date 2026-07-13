@@ -33,7 +33,7 @@
       "secondaryCta": "See the styles",
       "beforeLabel": "Before",
       "afterLabel": "After",
-      "freeNote": "3 free creations every month"
+      "freeNote": "{count} free creations every month"
     },
     "howItWorks": {
       "title": "How it works",
@@ -83,7 +83,7 @@
         "price": "$0",
         "period": "forever",
         "features": {
-          "credits": "3 creations every month",
+          "credits": "{count} creations every month",
           "styles": "All 15 styles",
           "quality": "HD downloads"
         },
@@ -169,7 +169,7 @@
     },
     "noCredits": {
       "title": "You're out of creations",
-      "description": "The free plan includes 3 creations per month, and they'll refresh soon. Pro plans are on the way.",
+      "description": "The free plan includes {count} creations per month, and they'll refresh soon. Pro plans are on the way.",
       "back": "Back to styles"
     },
     "failed": {

@@ -1,6 +1,7 @@
 import "server-only";
 
-import { GenerationStatus } from "@/shared/types";
+import { FREE_MONTHLY_GENERATIONS_PER_IP } from "@/shared/config/credits";
+import { GenerationStatus, SubscriptionStatus } from "@/shared/types";
 
 import { AppError } from "../lib/errors";
 import { ApiErrorCode } from "../lib/http";
@@ -10,13 +11,16 @@ import {
   findGenerationForUser,
   insertGeneration,
   listGenerationsByUser,
+  updateGenerationClientIpHash,
   updateGenerationStatus,
 } from "../repositories/generation.repository";
+import { consumeIpQuota, refundIpQuota } from "../repositories/ip-quota.repository";
 import {
   findOriginalImageById,
   findOriginalImageForUser,
 } from "../repositories/original-image.repository";
 import { findStyleWithPrompt } from "../repositories/style.repository";
+import { findUserById } from "../repositories/user.repository";
 import {
   getNextVersionNumber,
   insertVariant,
@@ -57,12 +61,35 @@ function pickTargetSize(width: number | null, height: number | null): ImageTarge
 }
 
 /**
+ * Counts a free-plan spend against the caller's (hashed) IP, so fresh accounts
+ * created from the same address cannot farm free credits. Returns the IP hash
+ * the spend was charged to; null means nothing was consumed (pro user or
+ * unknown IP). Deliberately reports the cap as NO_CREDITS — the client shows
+ * the same out-of-credits screen and the mechanism stays invisible to abusers.
+ */
+async function chargeFreeIpQuota(
+  userId: string,
+  clientIpHash: string | null,
+): Promise<string | null> {
+  if (!clientIpHash) return null;
+
+  const user = await findUserById(userId);
+  if (user?.subscription_status !== SubscriptionStatus.FREE) return null;
+
+  const withinQuota = await consumeIpQuota(clientIpHash, FREE_MONTHLY_GENERATIONS_PER_IP);
+  if (!withinQuota) throw new AppError(402, ApiErrorCode.NO_CREDITS);
+
+  return clientIpHash;
+}
+
+/**
  * Creates a generation and spends one credit. The heavy AI work is done by
  * `runGeneration`, which the route schedules after the response is sent.
  */
 export async function startGeneration(
   userId: string,
   input: { originalImageId: string; styleId: string },
+  clientIpHash: string | null,
 ): Promise<{ generationId: string }> {
   const original = await findOriginalImageForUser(input.originalImageId, userId);
   if (!original) throw new AppError(404, ApiErrorCode.NOT_FOUND, "original image not found");
@@ -70,15 +97,19 @@ export async function startGeneration(
   const style = await findStyleWithPrompt(input.styleId);
   if (!style) throw new AppError(404, ApiErrorCode.NOT_FOUND, "style not found");
 
+  const chargedIpHash = await chargeFreeIpQuota(userId, clientIpHash);
+
   const generation = await insertGeneration({
     userId,
     originalImageId: original.id,
     styleId: style.id,
     promptVersion: style.prompt_version,
+    clientIpHash: chargedIpHash,
   });
 
   const hasCredit = await consumeCredit(userId, generation.id);
   if (!hasCredit) {
+    if (chargedIpHash) await refundIpQuota(chargedIpHash);
     await updateGenerationStatus(generation.id, GenerationStatus.FAILED, ApiErrorCode.NO_CREDITS);
     throw new AppError(402, ApiErrorCode.NO_CREDITS);
   }
@@ -90,6 +121,7 @@ export async function startGeneration(
 export async function requestNewVariant(
   userId: string,
   generationId: string,
+  clientIpHash: string | null,
 ): Promise<{ generationId: string }> {
   const generation = await findGenerationForUser(generationId, userId);
   if (!generation) throw new AppError(404, ApiErrorCode.NOT_FOUND);
@@ -101,9 +133,16 @@ export async function requestNewVariant(
     throw new AppError(409, ApiErrorCode.INVALID_REQUEST, "generation is still in progress");
   }
 
-  const hasCredit = await consumeCredit(userId, generationId);
-  if (!hasCredit) throw new AppError(402, ApiErrorCode.NO_CREDITS);
+  const chargedIpHash = await chargeFreeIpQuota(userId, clientIpHash);
 
+  const hasCredit = await consumeCredit(userId, generationId);
+  if (!hasCredit) {
+    if (chargedIpHash) await refundIpQuota(chargedIpHash);
+    throw new AppError(402, ApiErrorCode.NO_CREDITS);
+  }
+
+  // Rebind so a failed run refunds this spend's IP, not the original one's.
+  await updateGenerationClientIpHash(generationId, chargedIpHash);
   await updateGenerationStatus(generationId, GenerationStatus.PENDING);
   return { generationId };
 }
@@ -145,6 +184,7 @@ export async function runGeneration(generationId: string): Promise<void> {
     console.error(`[generation ${generationId}]`, error);
     await updateGenerationStatus(generationId, GenerationStatus.FAILED, ApiErrorCode.GENERATION_FAILED);
     await refundCredit(generation.user_id, generationId);
+    if (generation.client_ip_hash) await refundIpQuota(generation.client_ip_hash);
   }
 }
 

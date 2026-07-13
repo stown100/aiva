@@ -8,6 +8,7 @@ import { useCallback, useEffect } from "react";
 import { MeStatus, useMe } from "@/entities/user";
 import { GenerationFlowStatus, useGenerationFlow } from "@/features/generate-image";
 import { track } from "@/shared/analytics";
+import { FREE_MONTHLY_CREDITS } from "@/shared/config";
 import { AppHeader } from "@/widgets/app-header";
 import { AuthGate } from "@/widgets/auth-gate";
 import { PhotoUploader } from "@/widgets/photo-uploader";
@@ -131,7 +132,7 @@ export function CreatePage() {
               <FlowMessage
                 icon={CreditCard}
                 title={t("create.noCredits.title")}
-                description={t("create.noCredits.description")}
+                description={t("create.noCredits.description", { count: FREE_MONTHLY_CREDITS })}
                 actions={[
                   { label: t("create.noCredits.back"), onClick: reset, variant: "outline" },
                 ]}

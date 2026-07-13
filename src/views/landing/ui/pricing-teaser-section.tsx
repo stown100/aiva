@@ -7,7 +7,7 @@ import { track } from "@/shared/analytics";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
-import { ROUTES } from "@/shared/config";
+import { FREE_MONTHLY_CREDITS, ROUTES } from "@/shared/config";
 import { Link } from "@/shared/i18n";
 
 const FREE_FEATURES = ["credits", "styles", "quality"] as const;
@@ -39,7 +39,7 @@ export function PricingTeaserSection() {
                 {FREE_FEATURES.map((feature) => (
                   <li key={feature} className="flex items-center gap-2 text-sm">
                     <Check className="size-4 shrink-0 text-primary" aria-hidden />
-                    {t(`free.features.${feature}`)}
+                    {t(`free.features.${feature}`, { count: FREE_MONTHLY_CREDITS })}
                   </li>
                 ))}
               </ul>

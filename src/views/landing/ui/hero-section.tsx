@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
-import { ROUTES } from "@/shared/config";
+import { FREE_MONTHLY_CREDITS, ROUTES } from "@/shared/config";
 import { Link } from "@/shared/i18n";
 
 import { BeforeAfterCard } from "./before-after-card";
@@ -79,7 +79,7 @@ export function HeroSection() {
             transition={{ duration: 0.5, delay: 0.32 }}
             className="mt-4 text-sm text-muted-foreground"
           >
-            {t("freeNote")}
+            {t("freeNote", { count: FREE_MONTHLY_CREDITS })}
           </motion.p>
         </div>
 
