@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 
 import { cn } from "@/shared/lib/utils";
 
-import type { UploadStatus } from "../model/use-upload-photo";
+import { UploadStatus } from "../model/use-upload-photo";
 
 const INPUT_ACCEPT = ".jpg,.jpeg,.png,.webp,.heic,.heif";
 
@@ -21,7 +21,7 @@ export function PhotoDropZone({ status, errorCode, onFileSelected }: PhotoDropZo
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
 
-  const isUploading = status === "uploading";
+  const isUploading = status === UploadStatus.UPLOADING;
 
   const handleFiles = (files: FileList | null) => {
     const file = files?.[0];
@@ -69,7 +69,7 @@ export function PhotoDropZone({ status, errorCode, onFileSelected }: PhotoDropZo
         )}
       </button>
 
-      {status === "error" && errorCode && (
+      {status === UploadStatus.ERROR && errorCode && (
         <p role="alert" className="mt-3 text-center text-sm text-destructive">
           {t(`errors.${errorCode}`)}
         </p>

@@ -3,7 +3,7 @@
 import { Check, Globe } from "lucide-react";
 import { useLocale } from "next-intl";
 
-import { updateMyLanguage, useMe } from "@/entities/user";
+import { MeStatus, updateMyLanguage, useMe } from "@/entities/user";
 import { LOCALES, usePathname, useRouter, type AppLocale } from "@/shared/i18n";
 import { Button } from "@/shared/ui/button";
 import {
@@ -30,7 +30,7 @@ export function LanguageSwitcher({ appearance = "icon" }: LanguageSwitcherProps)
     if (nextLocale === locale) return;
     // The cookie set by the i18n middleware keeps the choice for guests;
     // signed-in users also get it saved to their profile.
-    if (status === "authenticated") {
+    if (status === MeStatus.AUTHENTICATED) {
       void updateMyLanguage(nextLocale).catch(() => {});
     }
     router.replace(pathname, { locale: nextLocale });

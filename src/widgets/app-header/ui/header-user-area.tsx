@@ -3,17 +3,18 @@
 import { History } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { CreditsBadge, useMe } from "@/entities/user";
-import { SignOutButton } from "@/features/sign-out";
+import { CreditsBadge, MeStatus, useMe } from "@/entities/user";
 import { Button } from "@/shared/ui/button";
 import { ROUTES } from "@/shared/config";
 import { Link } from "@/shared/i18n";
+
+import { UserMenu } from "./user-menu";
 
 export function HeaderUserArea() {
   const t = useTranslations("common");
   const { profile, status, markGuest } = useMe();
 
-  if (status === "loading") {
+  if (status === MeStatus.LOADING) {
     return <div className="h-7 w-28 animate-pulse rounded-full bg-muted" aria-hidden />;
   }
 
@@ -46,7 +47,7 @@ export function HeaderUserArea() {
           label={t("creditsLeft", { count: profile.credits })}
         />
       </Link>
-      <SignOutButton onSignedOut={markGuest} />
+      <UserMenu profile={profile} onSignedOut={markGuest} />
     </div>
   );
 }

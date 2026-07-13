@@ -3,9 +3,10 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
-import { STYLE_CATEGORIES, useStyles, type StyleCategory } from "@/entities/style";
+import { STYLE_CATEGORIES, StylesStatus, useStyles } from "@/entities/style";
 import { SelectableStyleCard } from "@/features/select-style";
 import { cn } from "@/shared/lib/utils";
+import type { StyleCategory } from "@/shared/types";
 import { Button } from "@/shared/ui/button";
 
 type CategoryFilter = StyleCategory | "all";
@@ -20,7 +21,7 @@ export function StyleGallery({ selectedStyleId, onSelect }: StyleGalleryProps) {
   const { styles, status, retry } = useStyles();
   const [category, setCategory] = useState<CategoryFilter>("all");
 
-  if (status === "error") {
+  if (status === StylesStatus.ERROR) {
     return (
       <div className="flex flex-col items-center gap-4 rounded-3xl border border-dashed py-12 text-center">
         <p className="text-sm text-muted-foreground">{t("errors.internal")}</p>
@@ -54,7 +55,7 @@ export function StyleGallery({ selectedStyleId, onSelect }: StyleGalleryProps) {
         ))}
       </div>
 
-      {status === "loading" ? (
+      {status === StylesStatus.LOADING ? (
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {Array.from({ length: 6 }, (_, index) => (
             <div key={index} className="aspect-[3/4] animate-pulse rounded-2xl bg-muted" aria-hidden />

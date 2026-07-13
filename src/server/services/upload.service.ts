@@ -9,7 +9,7 @@ import sharp from "sharp";
 import { IMAGE_MAX_DIMENSION_PX, UPLOAD_MAX_SIZE_BYTES } from "@/shared/config";
 
 import { AppError } from "../lib/errors";
-import { API_ERROR_CODES } from "../lib/http";
+import { ApiErrorCode } from "../lib/http";
 import { insertOriginalImage } from "../repositories/original-image.repository";
 import { createSignedUrl, STORAGE_BUCKETS, uploadObject } from "../storage/object-storage";
 
@@ -68,10 +68,10 @@ async function processImage(input: Buffer, mime: string): Promise<ProcessedImage
 
 export async function uploadOriginalPhoto(userId: string, file: File): Promise<UploadedPhotoDto> {
   if (file.size === 0) {
-    throw new AppError(400, API_ERROR_CODES.invalidRequest, "empty file");
+    throw new AppError(400, ApiErrorCode.INVALID_REQUEST, "empty file");
   }
   if (file.size > UPLOAD_MAX_SIZE_BYTES) {
-    throw new AppError(413, API_ERROR_CODES.uploadTooLarge);
+    throw new AppError(413, ApiErrorCode.UPLOAD_TOO_LARGE);
   }
 
   const inputBuffer = Buffer.from(await file.arrayBuffer());
@@ -79,7 +79,7 @@ export async function uploadOriginalPhoto(userId: string, file: File): Promise<U
   // MIME is detected from magic bytes — the client-provided type is untrusted.
   const detected = await fileTypeFromBuffer(inputBuffer);
   if (!detected || !ACCEPTED_INPUT_MIME.has(detected.mime)) {
-    throw new AppError(415, API_ERROR_CODES.unsupportedFormat, `detected: ${detected?.mime}`);
+    throw new AppError(415, ApiErrorCode.UNSUPPORTED_FORMAT, `detected: ${detected?.mime}`);
   }
 
   let processed: ProcessedImage;
@@ -88,7 +88,7 @@ export async function uploadOriginalPhoto(userId: string, file: File): Promise<U
   } catch (error) {
     throw new AppError(
       415,
-      API_ERROR_CODES.unsupportedFormat,
+      ApiErrorCode.UNSUPPORTED_FORMAT,
       `decode failed: ${error instanceof Error ? error.message : String(error)}`,
     );
   }

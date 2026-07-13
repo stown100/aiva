@@ -10,26 +10,30 @@ import {
 } from "@/entities/generation";
 import { track } from "@/shared/analytics";
 import { ApiClientError } from "@/shared/api";
+import { ApiErrorCode, GenerationStatus } from "@/shared/types";
 
 const POLL_INTERVAL_MS = 2000;
 
-export type GenerationFlowStatus =
-  | "idle"
-  | "generating"
-  | "completed"
-  | "failed"
-  | "no_credits";
+export enum GenerationFlowStatus {
+  IDLE = "idle",
+  GENERATING = "generating",
+  COMPLETED = "completed",
+  FAILED = "failed",
+  NO_CREDITS = "no_credits",
+}
 
 interface UseGenerationFlowResult {
   status: GenerationFlowStatus;
   generation: GenerationDetail | null;
   start: (input: { originalImageId: string; styleId: string }) => Promise<void>;
   regenerate: () => Promise<void>;
+  /** Client-side guard: show the no-credits screen without hitting the API. */
+  markNoCredits: () => void;
   reset: () => void;
 }
 
 export function useGenerationFlow(): UseGenerationFlowResult {
-  const [status, setStatus] = useState<GenerationFlowStatus>("idle");
+  const [status, setStatus] = useState<GenerationFlowStatus>(GenerationFlowStatus.IDLE);
   const [generation, setGeneration] = useState<GenerationDetail | null>(null);
   const pollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const styleIdRef = useRef<string>("");
@@ -48,23 +52,26 @@ export function useGenerationFlow(): UseGenerationFlowResult {
       pollTimer.current = setTimeout(async () => {
         try {
           const detail = await fetchGeneration(generationId);
-          setGeneration(detail);
 
-          if (detail.status === "completed") {
+          // Intermediate polls render nothing — commit state only on terminal
+          // statuses so the progress screen isn't re-rendered every tick.
+          if (detail.status === GenerationStatus.COMPLETED) {
+            setGeneration(detail);
             const lastVersion = detail.variants.at(-1)?.versionNumber ?? 1;
             track({
               name: "generation_completed",
               props: { styleId: detail.styleId, versionNumber: lastVersion },
             });
-            setStatus("completed");
+            setStatus(GenerationFlowStatus.COMPLETED);
             return;
           }
-          if (detail.status === "failed") {
+          if (detail.status === GenerationStatus.FAILED) {
+            setGeneration(detail);
             track({
               name: "generation_failed",
               props: { styleId: detail.styleId, errorCode: detail.errorCode ?? "unknown" },
             });
-            setStatus("failed");
+            setStatus(GenerationFlowStatus.FAILED);
             return;
           }
           tick();
@@ -82,16 +89,16 @@ export function useGenerationFlow(): UseGenerationFlowResult {
     async (styleId: string, request: () => Promise<{ generationId: string }>) => {
       stopPolling();
       styleIdRef.current = styleId;
-      setStatus("generating");
+      setStatus(GenerationFlowStatus.GENERATING);
       track({ name: "generation_started", props: { styleId } });
 
       try {
         const { generationId } = await request();
         poll(generationId);
       } catch (error) {
-        if (error instanceof ApiClientError && error.code === "no_credits") {
+        if (error instanceof ApiClientError && error.code === ApiErrorCode.NO_CREDITS) {
           track({ name: "credit_exhausted" });
-          setStatus("no_credits");
+          setStatus(GenerationFlowStatus.NO_CREDITS);
           return;
         }
         track({
@@ -101,7 +108,7 @@ export function useGenerationFlow(): UseGenerationFlowResult {
             errorCode: error instanceof ApiClientError ? error.code : "unknown",
           },
         });
-        setStatus("failed");
+        setStatus(GenerationFlowStatus.FAILED);
       }
     },
     [poll, stopPolling],
@@ -121,11 +128,17 @@ export function useGenerationFlow(): UseGenerationFlowResult {
     await begin(current.styleId, () => requestNewVariant(current.id));
   }, [begin, generation]);
 
+  const markNoCredits = useCallback(() => {
+    stopPolling();
+    track({ name: "credit_exhausted" });
+    setStatus(GenerationFlowStatus.NO_CREDITS);
+  }, [stopPolling]);
+
   const reset = useCallback(() => {
     stopPolling();
-    setStatus("idle");
+    setStatus(GenerationFlowStatus.IDLE);
     setGeneration(null);
   }, [stopPolling]);
 
-  return { status, generation, start, regenerate, reset };
+  return { status, generation, start, regenerate, markNoCredits, reset };
 }

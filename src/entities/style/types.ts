@@ -1,6 +1,6 @@
-export const STYLE_CATEGORIES = ["trending", "creative", "professional", "fun"] as const;
+import { StyleCategory } from "@/shared/types";
 
-export type StyleCategory = (typeof STYLE_CATEGORIES)[number];
+export const STYLE_CATEGORIES = Object.values(StyleCategory);
 
 export const STYLE_IDS = [
   "anime-dream",

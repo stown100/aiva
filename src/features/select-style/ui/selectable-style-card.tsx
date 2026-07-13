@@ -1,6 +1,7 @@
 "use client";
 
 import { Check } from "lucide-react";
+import { memo } from "react";
 
 import { StyleCard } from "@/entities/style";
 import { cn } from "@/shared/lib/utils";
@@ -14,7 +15,9 @@ interface SelectableStyleCardProps {
   onSelect: (styleId: string) => void;
 }
 
-export function SelectableStyleCard({
+// Memoized: selecting a style re-renders only the two affected cards of the
+// grid, not all fifteen image cards.
+export const SelectableStyleCard = memo(function SelectableStyleCard({
   styleId,
   name,
   description,
@@ -40,4 +43,4 @@ export function SelectableStyleCard({
       )}
     </button>
   );
-}
+});

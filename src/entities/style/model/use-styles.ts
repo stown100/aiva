@@ -5,7 +5,11 @@ import { useCallback, useEffect, useState } from "react";
 import { fetchStyles } from "../api/style-api";
 import type { StyleSummary } from "../types";
 
-export type StylesStatus = "loading" | "ready" | "error";
+export enum StylesStatus {
+  LOADING = "loading",
+  READY = "ready",
+  ERROR = "error",
+}
 
 // The catalog is static within a session — cache it at module level so
 // remounts (navigation, state resets) don't refetch.
@@ -19,17 +23,19 @@ interface UseStylesResult {
 
 export function useStyles(): UseStylesResult {
   const [styles, setStyles] = useState<StyleSummary[]>(catalogCache ?? []);
-  const [status, setStatus] = useState<StylesStatus>(catalogCache ? "ready" : "loading");
+  const [status, setStatus] = useState<StylesStatus>(
+    catalogCache ? StylesStatus.READY : StylesStatus.LOADING,
+  );
 
   const load = useCallback(async () => {
-    setStatus("loading");
+    setStatus(StylesStatus.LOADING);
     try {
       const catalog = await fetchStyles();
       catalogCache = catalog;
       setStyles(catalog);
-      setStatus("ready");
+      setStatus(StylesStatus.READY);
     } catch {
-      setStatus("error");
+      setStatus(StylesStatus.ERROR);
     }
   }, []);
 

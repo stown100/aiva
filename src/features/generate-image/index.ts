@@ -1,1 +1,1 @@
-export { useGenerationFlow, type GenerationFlowStatus } from "./model/use-generation-flow";
+export { useGenerationFlow, GenerationFlowStatus } from "./model/use-generation-flow";

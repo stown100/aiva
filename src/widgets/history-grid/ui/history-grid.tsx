@@ -11,7 +11,11 @@ import { Button } from "@/shared/ui/button";
 import { ROUTES } from "@/shared/config";
 import { Link } from "@/shared/i18n";
 
-type HistoryStatus = "loading" | "ready" | "error";
+enum HistoryStatus {
+  LOADING = "loading",
+  READY = "ready",
+  ERROR = "error",
+}
 
 interface HistoryGridProps {
   onOpen: (generationId: string) => void;
@@ -21,18 +25,18 @@ export function HistoryGrid({ onOpen }: HistoryGridProps) {
   const t = useTranslations();
   const format = useFormatter();
   const [items, setItems] = useState<HistoryItem[]>([]);
-  const [status, setStatus] = useState<HistoryStatus>("loading");
+  const [status, setStatus] = useState<HistoryStatus>(HistoryStatus.LOADING);
 
   useEffect(() => {
     void fetchHistory()
       .then((history) => {
         setItems(history);
-        setStatus("ready");
+        setStatus(HistoryStatus.READY);
       })
-      .catch(() => setStatus("error"));
+      .catch(() => setStatus(HistoryStatus.ERROR));
   }, []);
 
-  if (status === "loading") {
+  if (status === HistoryStatus.LOADING) {
     return (
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {Array.from({ length: 6 }, (_, index) => (
@@ -42,7 +46,7 @@ export function HistoryGrid({ onOpen }: HistoryGridProps) {
     );
   }
 
-  if (status === "error") {
+  if (status === HistoryStatus.ERROR) {
     return <p className="py-12 text-center text-sm text-muted-foreground">{t("errors.internal")}</p>;
   }
 

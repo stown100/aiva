@@ -9,7 +9,11 @@ import { UPLOAD_ACCEPTED_EXTENSIONS, UPLOAD_MAX_SIZE_BYTES } from "@/shared/conf
 import { uploadPhoto } from "../api/upload-api";
 import type { UploadedPhoto } from "../types";
 
-export type UploadStatus = "idle" | "uploading" | "error";
+export enum UploadStatus {
+  IDLE = "idle",
+  UPLOADING = "uploading",
+  ERROR = "error",
+}
 
 interface UseUploadPhotoOptions {
   onUploaded: (photo: UploadedPhoto) => void;
@@ -27,12 +31,12 @@ function hasAcceptedExtension(fileName: string): boolean {
 }
 
 export function useUploadPhoto({ onUploaded }: UseUploadPhotoOptions): UseUploadPhotoResult {
-  const [status, setStatus] = useState<UploadStatus>("idle");
+  const [status, setStatus] = useState<UploadStatus>(UploadStatus.IDLE);
   const [errorCode, setErrorCode] = useState<string | null>(null);
 
   const fail = (code: string) => {
     setErrorCode(code);
-    setStatus("error");
+    setStatus(UploadStatus.ERROR);
   };
 
   const upload = async (file: File) => {
@@ -47,14 +51,14 @@ export function useUploadPhoto({ onUploaded }: UseUploadPhotoOptions): UseUpload
       return;
     }
 
-    setStatus("uploading");
+    setStatus(UploadStatus.UPLOADING);
     setErrorCode(null);
     track({ name: "upload_started" });
 
     try {
       const photo = await uploadPhoto(file);
       track({ name: "upload_completed", props: { format: "jpeg", sizeBytes: file.size } });
-      setStatus("idle");
+      setStatus(UploadStatus.IDLE);
       onUploaded(photo);
     } catch (error) {
       fail(error instanceof ApiClientError ? error.code : "unknown");

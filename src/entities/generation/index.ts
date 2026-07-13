@@ -1,4 +1,4 @@
-export type { GenerationDetail, GenerationStatus, GenerationVariant, HistoryItem } from "./types";
+export type { GenerationDetail, GenerationVariant, HistoryItem } from "./types";
 export {
   fetchGeneration,
   fetchHistory,

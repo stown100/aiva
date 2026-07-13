@@ -1,4 +1,4 @@
-export type GenerationStatus = "pending" | "processing" | "completed" | "failed";
+import type { GenerationStatus } from "@/shared/types";
 
 export interface GenerationVariant {
   id: string;

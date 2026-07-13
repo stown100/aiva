@@ -1,8 +1,8 @@
 import "server-only";
 
-import { getSupabaseAdmin } from "../lib/supabase-admin";
+import { GenerationStatus } from "@/shared/types";
 
-export type GenerationDbStatus = "pending" | "processing" | "completed" | "failed";
+import { getSupabaseAdmin } from "../lib/supabase-admin";
 
 export interface GenerationRecord {
   id: string;
@@ -10,7 +10,7 @@ export interface GenerationRecord {
   original_image_id: string;
   style_id: string;
   prompt_version: number;
-  status: GenerationDbStatus;
+  status: GenerationStatus;
   error_code: string | null;
   created_at: string;
 }
@@ -30,7 +30,7 @@ export async function insertGeneration(input: InsertGenerationInput): Promise<Ge
       original_image_id: input.originalImageId,
       style_id: input.styleId,
       prompt_version: input.promptVersion,
-      status: "pending",
+      status: GenerationStatus.PENDING,
     })
     .select()
     .single();
@@ -73,7 +73,7 @@ export async function listGenerationsByUser(
     .from("generations")
     .select()
     .eq("user_id", userId)
-    .eq("status", "completed")
+    .eq("status", GenerationStatus.COMPLETED)
     .order("created_at", { ascending: false })
     .limit(limit);
 
@@ -83,7 +83,7 @@ export async function listGenerationsByUser(
 
 export async function updateGenerationStatus(
   id: string,
-  status: GenerationDbStatus,
+  status: GenerationStatus,
   errorCode: string | null = null,
 ): Promise<void> {
   const { error } = await getSupabaseAdmin()

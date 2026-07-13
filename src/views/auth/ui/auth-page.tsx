@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { useMe } from "@/entities/user";
+import { MeStatus, useMe } from "@/entities/user";
 import { SignInCard } from "@/features/sign-in";
 import { ROUTES } from "@/shared/config";
 import { useRouter } from "@/shared/i18n";
@@ -18,7 +18,7 @@ export function AuthPage({ initialError }: AuthPageProps) {
 
   // Already signed in — the sign-in form makes no sense, go create.
   useEffect(() => {
-    if (status === "authenticated") {
+    if (status === MeStatus.AUTHENTICATED) {
       router.replace(ROUTES.create);
     }
   }, [status, router]);
@@ -27,7 +27,7 @@ export function AuthPage({ initialError }: AuthPageProps) {
     <>
       <AppHeader />
       <main className="flex flex-1 items-center justify-center px-4 py-16">
-        {status === "authenticated" || status === "loading" ? (
+        {status === MeStatus.AUTHENTICATED || status === MeStatus.LOADING ? (
           <div className="h-80 w-full max-w-sm animate-pulse rounded-3xl bg-muted" aria-hidden />
         ) : (
           <SignInCard initialError={initialError} />

@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
 
-import { useSignIn } from "../model/use-sign-in";
+import { SignInStatus, useSignIn } from "../model/use-sign-in";
 import { GoogleIcon } from "./google-icon";
 
 interface SignInCardProps {
@@ -21,9 +21,10 @@ export function SignInCard({ initialError = false }: SignInCardProps) {
   const { status, sentTo, sendMagicLink, signInWithGoogle, reset } = useSignIn();
   const [email, setEmail] = useState("");
 
-  const showError = status === "error" || (initialError && status === "idle");
+  const showError =
+    status === SignInStatus.ERROR || (initialError && status === SignInStatus.IDLE);
 
-  if (status === "sent" && sentTo) {
+  if (status === SignInStatus.SENT && sentTo) {
     return (
       <Card className="w-full max-w-sm text-center">
         <CardContent className="flex flex-col items-center pt-6">
@@ -55,7 +56,7 @@ export function SignInCard({ initialError = false }: SignInCardProps) {
         <Button
           variant="outline"
           className="h-11 w-full gap-2"
-          disabled={status === "sending"}
+          disabled={status === SignInStatus.SENDING}
           onClick={() => void signInWithGoogle()}
         >
           <GoogleIcon className="size-4" />
@@ -94,9 +95,9 @@ export function SignInCard({ initialError = false }: SignInCardProps) {
           <Button
             type="submit"
             className="bg-brand-gradient h-11 w-full border-0 text-white"
-            disabled={status === "sending" || email.length === 0}
+            disabled={status === SignInStatus.SENDING || email.length === 0}
           >
-            {status === "sending" ? t("sending") : t("sendLink")}
+            {status === SignInStatus.SENDING ? t("sending") : t("sendLink")}
           </Button>
         </form>
       </CardContent>

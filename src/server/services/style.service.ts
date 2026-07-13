@@ -1,8 +1,10 @@
 import "server-only";
 
+import { StyleCategory } from "@/shared/types";
+
 import { listActiveStyles } from "../repositories/style.repository";
 
-const CATEGORY_ORDER = ["trending", "creative", "professional", "fun"];
+const CATEGORY_ORDER: string[] = Object.values(StyleCategory);
 
 export interface StyleSummaryDto {
   id: string;

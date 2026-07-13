@@ -1,4 +1,6 @@
-import type { StyleCategory, StyleId } from "./types";
+import { StyleCategory } from "@/shared/types";
+
+import type { StyleId } from "./types";
 
 /**
  * Static catalog used for marketing surfaces (landing) and as a visual
@@ -6,21 +8,21 @@ import type { StyleCategory, StyleId } from "./types";
  * generation is the `styles` table in the database.
  */
 export const STYLE_CATALOG: Record<StyleId, { category: StyleCategory }> = {
-  "anime-dream": { category: "trending" },
-  "pixar-character": { category: "trending" },
-  "cinematic-movie": { category: "trending" },
-  "luxury-magazine": { category: "trending" },
-  "vintage-film": { category: "trending" },
-  cyberpunk: { category: "creative" },
-  "fantasy-hero": { category: "creative" },
-  "comic-book": { category: "creative" },
-  watercolor: { category: "creative" },
-  "oil-painting": { category: "creative" },
-  "linkedin-portrait": { category: "professional" },
-  "startup-founder": { category: "professional" },
-  "influencer-style": { category: "professional" },
-  "retro-90s": { category: "fun" },
-  "game-character": { category: "fun" },
+  "anime-dream": { category: StyleCategory.TRENDING },
+  "pixar-character": { category: StyleCategory.TRENDING },
+  "cinematic-movie": { category: StyleCategory.TRENDING },
+  "luxury-magazine": { category: StyleCategory.TRENDING },
+  "vintage-film": { category: StyleCategory.TRENDING },
+  cyberpunk: { category: StyleCategory.CREATIVE },
+  "fantasy-hero": { category: StyleCategory.CREATIVE },
+  "comic-book": { category: StyleCategory.CREATIVE },
+  watercolor: { category: StyleCategory.CREATIVE },
+  "oil-painting": { category: StyleCategory.CREATIVE },
+  "linkedin-portrait": { category: StyleCategory.PROFESSIONAL },
+  "startup-founder": { category: StyleCategory.PROFESSIONAL },
+  "influencer-style": { category: StyleCategory.PROFESSIONAL },
+  "retro-90s": { category: StyleCategory.FUN },
+  "game-character": { category: StyleCategory.FUN },
 };
 
 export const STYLE_PLACEHOLDER_GRADIENTS: Record<StyleId, string> = {

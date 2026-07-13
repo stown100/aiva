@@ -1,11 +1,11 @@
 import { getSessionUser } from "@/server/auth/session";
-import { API_ERROR_CODES, jsonError, jsonOk } from "@/server/lib/http";
+import { ApiErrorCode, jsonError, jsonOk } from "@/server/lib/http";
 import { getUserHistory } from "@/server/services/generation.service";
 
 export async function GET() {
   const sessionUser = await getSessionUser();
   if (!sessionUser) {
-    return jsonError(401, API_ERROR_CODES.unauthorized);
+    return jsonError(401, ApiErrorCode.UNAUTHORIZED);
   }
 
   try {
@@ -13,6 +13,6 @@ export async function GET() {
     return jsonOk(items);
   } catch (error) {
     console.error("[api/history]", error);
-    return jsonError(500, API_ERROR_CODES.internal);
+    return jsonError(500, ApiErrorCode.INTERNAL);
   }
 }

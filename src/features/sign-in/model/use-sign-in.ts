@@ -8,7 +8,12 @@ import { ROUTES } from "@/shared/config";
 import { getPathname } from "@/shared/i18n";
 import type { AppLocale } from "@/shared/i18n";
 
-export type SignInStatus = "idle" | "sending" | "sent" | "error";
+export enum SignInStatus {
+  IDLE = "idle",
+  SENDING = "sending",
+  SENT = "sent",
+  ERROR = "error",
+}
 
 interface UseSignInResult {
   status: SignInStatus;
@@ -20,7 +25,7 @@ interface UseSignInResult {
 
 export function useSignIn(): UseSignInResult {
   const locale = useLocale() as AppLocale;
-  const [status, setStatus] = useState<SignInStatus>("idle");
+  const [status, setStatus] = useState<SignInStatus>(SignInStatus.IDLE);
   const [sentTo, setSentTo] = useState<string | null>(null);
 
   const callbackUrl = () => {
@@ -29,32 +34,32 @@ export function useSignIn(): UseSignInResult {
   };
 
   const sendMagicLink = async (email: string) => {
-    setStatus("sending");
+    setStatus(SignInStatus.SENDING);
     const { error } = await getSupabaseBrowser().auth.signInWithOtp({
       email,
       options: { emailRedirectTo: callbackUrl() },
     });
 
     if (error) {
-      setStatus("error");
+      setStatus(SignInStatus.ERROR);
       return;
     }
     setSentTo(email);
-    setStatus("sent");
+    setStatus(SignInStatus.SENT);
   };
 
   const signInWithGoogle = async () => {
-    setStatus("sending");
+    setStatus(SignInStatus.SENDING);
     const { error } = await getSupabaseBrowser().auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo: callbackUrl() },
     });
     // On success the browser navigates away; only errors reach this point.
-    if (error) setStatus("error");
+    if (error) setStatus(SignInStatus.ERROR);
   };
 
   const reset = () => {
-    setStatus("idle");
+    setStatus(SignInStatus.IDLE);
     setSentTo(null);
   };
 

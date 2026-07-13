@@ -1,7 +1,9 @@
 import "server-only";
 
+import { GenerationStatus } from "@/shared/types";
+
 import { AppError } from "../lib/errors";
-import { API_ERROR_CODES } from "../lib/http";
+import { ApiErrorCode } from "../lib/http";
 import { consumeCredit, refundCredit } from "../repositories/credit.repository";
 import {
   findGenerationById,
@@ -9,7 +11,6 @@ import {
   insertGeneration,
   listGenerationsByUser,
   updateGenerationStatus,
-  type GenerationDbStatus,
 } from "../repositories/generation.repository";
 import {
   findOriginalImageById,
@@ -42,7 +43,7 @@ export interface GenerationVariantDto {
 export interface GenerationDetailDto {
   id: string;
   styleId: string;
-  status: GenerationDbStatus;
+  status: GenerationStatus;
   errorCode: string | null;
   variants: GenerationVariantDto[];
 }
@@ -64,10 +65,10 @@ export async function startGeneration(
   input: { originalImageId: string; styleId: string },
 ): Promise<{ generationId: string }> {
   const original = await findOriginalImageForUser(input.originalImageId, userId);
-  if (!original) throw new AppError(404, API_ERROR_CODES.notFound, "original image not found");
+  if (!original) throw new AppError(404, ApiErrorCode.NOT_FOUND, "original image not found");
 
   const style = await findStyleWithPrompt(input.styleId);
-  if (!style) throw new AppError(404, API_ERROR_CODES.notFound, "style not found");
+  if (!style) throw new AppError(404, ApiErrorCode.NOT_FOUND, "style not found");
 
   const generation = await insertGeneration({
     userId,
@@ -78,8 +79,8 @@ export async function startGeneration(
 
   const hasCredit = await consumeCredit(userId, generation.id);
   if (!hasCredit) {
-    await updateGenerationStatus(generation.id, "failed", API_ERROR_CODES.noCredits);
-    throw new AppError(402, API_ERROR_CODES.noCredits);
+    await updateGenerationStatus(generation.id, GenerationStatus.FAILED, ApiErrorCode.NO_CREDITS);
+    throw new AppError(402, ApiErrorCode.NO_CREDITS);
   }
 
   return { generationId: generation.id };
@@ -91,16 +92,19 @@ export async function requestNewVariant(
   generationId: string,
 ): Promise<{ generationId: string }> {
   const generation = await findGenerationForUser(generationId, userId);
-  if (!generation) throw new AppError(404, API_ERROR_CODES.notFound);
+  if (!generation) throw new AppError(404, ApiErrorCode.NOT_FOUND);
 
-  if (generation.status === "pending" || generation.status === "processing") {
-    throw new AppError(409, API_ERROR_CODES.invalidRequest, "generation is still in progress");
+  if (
+    generation.status === GenerationStatus.PENDING ||
+    generation.status === GenerationStatus.PROCESSING
+  ) {
+    throw new AppError(409, ApiErrorCode.INVALID_REQUEST, "generation is still in progress");
   }
 
   const hasCredit = await consumeCredit(userId, generationId);
-  if (!hasCredit) throw new AppError(402, API_ERROR_CODES.noCredits);
+  if (!hasCredit) throw new AppError(402, ApiErrorCode.NO_CREDITS);
 
-  await updateGenerationStatus(generationId, "pending");
+  await updateGenerationStatus(generationId, GenerationStatus.PENDING);
   return { generationId };
 }
 
@@ -111,10 +115,10 @@ export async function requestNewVariant(
  */
 export async function runGeneration(generationId: string): Promise<void> {
   const generation = await findGenerationById(generationId);
-  if (!generation || generation.status === "processing") return;
+  if (!generation || generation.status === GenerationStatus.PROCESSING) return;
 
   try {
-    await updateGenerationStatus(generationId, "processing");
+    await updateGenerationStatus(generationId, GenerationStatus.PROCESSING);
 
     const [original, style] = await Promise.all([
       findOriginalImageById(generation.original_image_id),
@@ -136,10 +140,10 @@ export async function runGeneration(generationId: string): Promise<void> {
     await uploadObject(STORAGE_BUCKETS.results, storagePath, resultImage, "image/png");
     await insertVariant({ generationId, versionNumber, storagePath });
 
-    await updateGenerationStatus(generationId, "completed");
+    await updateGenerationStatus(generationId, GenerationStatus.COMPLETED);
   } catch (error) {
     console.error(`[generation ${generationId}]`, error);
-    await updateGenerationStatus(generationId, "failed", API_ERROR_CODES.generationFailed);
+    await updateGenerationStatus(generationId, GenerationStatus.FAILED, ApiErrorCode.GENERATION_FAILED);
     await refundCredit(generation.user_id, generationId);
   }
 }
@@ -190,7 +194,7 @@ export async function getGenerationDetail(
   generationId: string,
 ): Promise<GenerationDetailDto> {
   const generation = await findGenerationForUser(generationId, userId);
-  if (!generation) throw new AppError(404, API_ERROR_CODES.notFound);
+  if (!generation) throw new AppError(404, ApiErrorCode.NOT_FOUND);
 
   const variants = await listVariants(generationId);
   const variantDtos = await Promise.all(

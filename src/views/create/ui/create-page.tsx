@@ -1,17 +1,16 @@
 "use client";
 
 import { CreditCard, TriangleAlert } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
-import { useMe } from "@/entities/user";
-import { useGenerationFlow } from "@/features/generate-image";
+import { MeStatus, useMe } from "@/entities/user";
+import { GenerationFlowStatus, useGenerationFlow } from "@/features/generate-image";
 import { track } from "@/shared/analytics";
 import { AppHeader } from "@/widgets/app-header";
 import { AuthGate } from "@/widgets/auth-gate";
-import { GenerationProgress } from "@/widgets/generation-progress";
 import { PhotoUploader } from "@/widgets/photo-uploader";
-import { ResultViewer } from "@/widgets/result-viewer";
 import { StyleGallery } from "@/widgets/style-gallery";
 
 import { useCreateFlowStore } from "../model/create-flow-store";
@@ -19,49 +18,84 @@ import { FlowMessage } from "./flow-message";
 import { GenerateBar } from "./generate-bar";
 import { PhotoStrip } from "./photo-strip";
 
+const widgetFallback = (
+  <div className="min-h-64 animate-pulse rounded-3xl bg-muted" aria-hidden />
+);
+
+// These framer-motion-heavy widgets appear only mid-flow, so they're loaded
+// on demand instead of shipping with the initial /create bundle.
+const GenerationProgress = dynamic(
+  () => import("@/widgets/generation-progress").then((mod) => mod.GenerationProgress),
+  { loading: () => widgetFallback },
+);
+const ResultViewer = dynamic(
+  () => import("@/widgets/result-viewer").then((mod) => mod.ResultViewer),
+  { loading: () => widgetFallback },
+);
+
 export function CreatePage() {
   const t = useTranslations();
-  const { status: meStatus, refetch: refetchMe } = useMe();
+  const { profile, status: meStatus, refetch: refetchMe } = useMe();
   const { photo, styleId, setPhoto, setStyle } = useCreateFlowStore();
   const flow = useGenerationFlow();
+  const { markNoCredits, regenerate, reset, start } = flow;
 
   const styleName = styleId ? t(`styles.items.${styleId}.name`) : "";
 
-  // Keep the shared credits state in sync on every flow transition: spend on
-  // start, refund on failure — the header badge updates without a reload.
+  // A failed generation refunds the credit on the server — refetch on the
+  // terminal states so the header badge reflects it without a reload.
   useEffect(() => {
-    if (flow.status === "generating" || flow.status === "completed" || flow.status === "failed") {
+    if (
+      flow.status === GenerationFlowStatus.COMPLETED ||
+      flow.status === GenerationFlowStatus.FAILED
+    ) {
       void refetchMe();
     }
   }, [flow.status, refetchMe]);
 
-  const handleSelectStyle = (id: string) => {
-    setStyle(id);
-    track({ name: "style_selected", props: { styleId: id } });
-  };
+  const handleSelectStyle = useCallback(
+    (id: string) => {
+      setStyle(id);
+      track({ name: "style_selected", props: { styleId: id } });
+    },
+    [setStyle],
+  );
 
-  const handleGenerate = () => {
+  // Don't hit the API when we already know there are no credits — the request
+  // would only fail after work (and money) is spent. If the profile is
+  // unavailable (MeStatus.ERROR), the server-side check stays the source of truth.
+  const hasNoCredits = profile !== null && profile.credits <= 0;
+
+  const handleGenerate = useCallback(() => {
     if (!photo || !styleId) return;
-    void flow.start({ originalImageId: photo.originalImageId, styleId }).then(refetchMe);
-  };
+    if (hasNoCredits) {
+      markNoCredits();
+      return;
+    }
+    void start({ originalImageId: photo.originalImageId, styleId }).then(refetchMe);
+  }, [photo, styleId, hasNoCredits, markNoCredits, start, refetchMe]);
 
-  const handleRegenerate = () => {
-    void flow.regenerate().then(refetchMe);
-  };
+  const handleRegenerate = useCallback(() => {
+    if (hasNoCredits) {
+      markNoCredits();
+      return;
+    }
+    void regenerate().then(refetchMe);
+  }, [hasNoCredits, markNoCredits, regenerate, refetchMe]);
 
   return (
     <>
       <AppHeader />
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-10 pb-28">
-        {meStatus === "loading" && (
+        {meStatus === MeStatus.LOADING && (
           <div className="min-h-64 animate-pulse rounded-3xl bg-muted" aria-hidden />
         )}
 
-        {meStatus === "guest" && <AuthGate />}
+        {meStatus === MeStatus.GUEST && <AuthGate />}
 
-        {(meStatus === "authenticated" || meStatus === "error") && (
+        {(meStatus === MeStatus.AUTHENTICATED || meStatus === MeStatus.ERROR) && (
           <>
-            {flow.status === "idle" && (
+            {flow.status === GenerationFlowStatus.IDLE && (
               <section>
                 <h1 className="text-center text-2xl font-bold tracking-tight md:text-3xl">
                   {photo ? t("create.styleStep.title") : t("create.upload.step")}
@@ -80,38 +114,38 @@ export function CreatePage() {
               </section>
             )}
 
-            {flow.status === "generating" && photo && (
+            {flow.status === GenerationFlowStatus.GENERATING && photo && (
               <GenerationProgress styleName={styleName} photoUrl={photo.previewUrl} />
             )}
 
-            {flow.status === "completed" && flow.generation && (
+            {flow.status === GenerationFlowStatus.COMPLETED && flow.generation && (
               <ResultViewer
                 generation={flow.generation}
                 styleName={styleName}
                 onRegenerate={handleRegenerate}
-                onChangeStyle={flow.reset}
+                onChangeStyle={reset}
               />
             )}
 
-            {flow.status === "no_credits" && (
+            {flow.status === GenerationFlowStatus.NO_CREDITS && (
               <FlowMessage
                 icon={CreditCard}
                 title={t("create.noCredits.title")}
                 description={t("create.noCredits.description")}
                 actions={[
-                  { label: t("create.noCredits.back"), onClick: flow.reset, variant: "outline" },
+                  { label: t("create.noCredits.back"), onClick: reset, variant: "outline" },
                 ]}
               />
             )}
 
-            {flow.status === "failed" && (
+            {flow.status === GenerationFlowStatus.FAILED && (
               <FlowMessage
                 icon={TriangleAlert}
                 title={t("create.failed.title")}
                 description={t("create.failed.description")}
                 actions={[
                   { label: t("common.retry"), onClick: handleGenerate },
-                  { label: t("create.failed.back"), onClick: flow.reset, variant: "outline" },
+                  { label: t("create.failed.back"), onClick: reset, variant: "outline" },
                 ]}
               />
             )}
@@ -119,7 +153,7 @@ export function CreatePage() {
         )}
       </main>
 
-      {photo && styleId && flow.status === "idle" && (
+      {photo && styleId && flow.status === GenerationFlowStatus.IDLE && (
         <GenerateBar styleName={styleName} onGenerate={handleGenerate} />
       )}
     </>

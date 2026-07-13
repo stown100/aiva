@@ -8,7 +8,12 @@ import { ApiClientError } from "@/shared/api";
 import { fetchMe } from "../api/user-api";
 import type { UserProfile } from "../types";
 
-export type MeStatus = "loading" | "authenticated" | "guest" | "error";
+export enum MeStatus {
+  LOADING = "loading",
+  AUTHENTICATED = "authenticated",
+  GUEST = "guest",
+  ERROR = "error",
+}
 
 interface UserState {
   profile: UserProfile | null;
@@ -24,19 +29,22 @@ interface UserState {
  */
 const useUserStore = create<UserState>((set) => ({
   profile: null,
-  status: "loading",
+  status: MeStatus.LOADING,
   refetch: async () => {
     try {
       const profile = await fetchMe();
-      set({ profile, status: "authenticated" });
+      set({ profile, status: MeStatus.AUTHENTICATED });
     } catch (error) {
       set({
         profile: null,
-        status: error instanceof ApiClientError && error.status === 401 ? "guest" : "error",
+        status:
+          error instanceof ApiClientError && error.status === 401
+            ? MeStatus.GUEST
+            : MeStatus.ERROR,
       });
     }
   },
-  markGuest: () => set({ profile: null, status: "guest" }),
+  markGuest: () => set({ profile: null, status: MeStatus.GUEST }),
 }));
 
 let initialFetchStarted = false;

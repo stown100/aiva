@@ -2,10 +2,11 @@
 
 import { useFormatter, useTranslations } from "next-intl";
 
-import { useMe } from "@/entities/user";
+import { MeStatus, useMe } from "@/entities/user";
 import { SignOutButton } from "@/features/sign-out";
 import { LanguageSwitcher } from "@/features/switch-language";
 import { FREE_MONTHLY_CREDITS } from "@/shared/config";
+import { SubscriptionStatus } from "@/shared/types";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
 import { Card, CardContent } from "@/shared/ui/card";
@@ -21,13 +22,13 @@ export function AccountPage() {
     <>
       <AppHeader />
       <main className="mx-auto w-full max-w-md flex-1 px-4 py-10">
-        {status === "loading" && (
+        {status === MeStatus.LOADING && (
           <div className="min-h-64 animate-pulse rounded-3xl bg-muted" aria-hidden />
         )}
 
-        {status === "guest" && <AuthGate />}
+        {status === MeStatus.GUEST && <AuthGate />}
 
-        {status === "error" && (
+        {status === MeStatus.ERROR && (
           <div className="flex flex-col items-center gap-4 rounded-3xl border border-dashed py-12 text-center">
             <p className="text-sm text-muted-foreground">{t("errors.internal")}</p>
             <Button variant="outline" onClick={() => void refetch()}>
@@ -53,7 +54,7 @@ export function AccountPage() {
                   <span className="text-sm text-muted-foreground">{t("account.plan")}</span>
                   <span className="flex items-center gap-2">
                     <Badge variant="secondary" className="rounded-full">
-                      {profile.subscriptionStatus === "free"
+                      {profile.subscriptionStatus === SubscriptionStatus.FREE
                         ? t("account.planFree")
                         : profile.subscriptionStatus}
                     </Badge>
@@ -86,7 +87,7 @@ export function AccountPage() {
             </Card>
 
             <div className="mt-6 flex justify-center">
-              <SignOutButton appearance="labeled" onSignedOut={markGuest} />
+              <SignOutButton onSignedOut={markGuest} />
             </div>
           </section>
         )}
